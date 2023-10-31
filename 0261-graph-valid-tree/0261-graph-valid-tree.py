@@ -13,16 +13,15 @@ class DSU:
         rootX = self.find(x)
         rootY = self.find(y)
         if rootX == rootY:
-            return False
-        if self.rank[rootX] < self.rank[rootY]:
-            self.root[rootX] = rootY
-            self.rank[rootY] += self.rank[rootX]
-        else: 
+             return False
+        if self.rank[rootX] > self.rank[rootY]:
             self.root[rootY] = rootX
-            self.rank[rootX] += self.rank[rootY]
+        elif self.rank[rootX] < self.rank[rootY]:
+            self.root[rootX] = rootY
+        else:
+            self.root[rootY] = rootX
+            self.rank[rootX] += 1
         return True
-            
-
 
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
