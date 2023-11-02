@@ -17,19 +17,25 @@ class unionFind:
         if root_x == root_y or root_y != y:
             return False
         self.ncomponent -= 1
+        # if root_x != root_y:
+        #     if self.rank[root_x] > self.rank[root_y]:
+        #         self.rank[root_y] = root_x
+        #     elif  self.rank[root_x] < self.rank[root_y]:
+        #         self.rank[root_x] = root_y
+        #     else:
+                
         self.root[root_y] = root_x
-
+        self.rank[root_x] += 1
         return True
     
 class Solution:
     def validateBinaryTreeNodes(self, n: int, leftChild: List[int], rightChild: List[int]) -> bool:
-        graph = list(zip(leftChild, rightChild))
         uf = unionFind(n)
         for node in range(n):
             for child in [leftChild[node], rightChild[node]]:
+                print(child)
                 if child == -1:
                     continue
-                
                 if not uf.union(node, child):
                     return False
         return uf.ncomponent == 1
