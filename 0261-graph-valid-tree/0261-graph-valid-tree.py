@@ -25,13 +25,11 @@ class DSU:
 
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
-        if len(edges) != n-1:
-            return False
+        if len(edges) != n - 1:
+            return False 
         uf = DSU(n)
-
-        for A, B in edges:
-            if not uf.union(A,B):
+        for x, y in edges:
+            if uf.union(x, y) is False:
                 return False
         return True
-
 
