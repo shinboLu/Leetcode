@@ -32,25 +32,24 @@ class Solution:
 
         for x, y in pairs: 
             uf.union(x, y)
-        print(uf.root)
+
+        
+        group = collections.defaultdict(lambda: ([], []))
+
+        for i, ch in enumerate(s):
+            parent= uf.find(i)
+            group[parent][0].append(i)
+            group[parent][1].append(ch)
 
 
-        parent = [uf.find(i) for i in range(n)]
-        print(parent)
-        hashmap = collections.defaultdict(deque)
+        res = [''] * n
+        for ids, chars in group.values():
+            ids.sort()
+            chars.sort()
+            for ch, i in zip(chars, ids):
+                res[i] = ch
 
-        for i in range(n):
-            hashmap[parent[i]].append(s[i])
-        for key in hashmap:
-            hashmap[key] = deque(sorted(hashmap[key]))
-
-        res = ''
-        for i in range(n):
-            hash_key = parent[i]
-            res += hashmap[hash_key].popleft()
-        return res 
-
-
+        return "".join(res)
 
 
         
