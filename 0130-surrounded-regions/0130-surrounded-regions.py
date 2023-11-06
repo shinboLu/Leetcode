@@ -3,29 +3,31 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        queue = collections.deque()
+
+        DIR = [[0,1], [1,0], [-1,0], [0,-1]]
         nrow = len(board)
         ncol = len(board[0])
-
+        queue = collections.deque()
         if ncol == 0:
             return 
-        DIR = [(-1, 0), (0, -1), (1, 0), (0, 1)]
-        for i in range(nrow):
-            for j in range(ncol):
-                if (i ==0 or j ==0 or i == nrow - 1 or j == ncol - 1) and board[i][j] == 'O':
-                    queue.append([i,j])
+
+        for row in range(nrow):
+            for col in range(ncol):
+                if (row == 0 or col == 0 or row == nrow-1 or col == ncol -1) and board[row][col] == 'O':
+                    queue.append((row, col))
         
         while queue:
-            x, y = queue.popleft()
-            board[x][y] = 'T'
-            for dirX, dirY in DIR:
-                dx, dy = x + dirX, y + dirY
+            r, c = queue.popleft()
+            board[r][c] = "Need Reverse Back"
+            for dx, dy in DIR:
+                new_x, new_y = r + dx, c + dy
 
-                if 0 <= dx < nrow and 0 <= dy < ncol and board[dx][dy] == 'O':
-                    queue.append([dx, dy])
+                if 0 <= new_x < nrow and 0 <= new_y < ncol and board[new_x][new_y] == 'O':
+                    queue.append((new_x, new_y))
+
         for i in range(nrow):
             for j in range(ncol):
                 if board[i][j] == 'O':
                     board[i][j] = 'X'
-                elif board[i][j] == 'T':
+                elif board[i][j] == 'Need Reverse Back':
                     board[i][j] = 'O'
