@@ -4,17 +4,14 @@ class Solution:
 
         res = []
 
-        def backtracking(curr_node, path):
-            if curr_node == n:
+        def backtracking(node, path):
+            if node == n:
                 res.append(list(path))
-                return
-            for next_node in graph[curr_node]:
+                return 
+
+            for next_node in graph[node]:
                 path.append(next_node)
                 backtracking(next_node, path)
                 path.pop()
-
-        path = [0]
-        backtracking(0, path)
-        return res          
-            
-        
+        backtracking(0, [0])
+        return res
