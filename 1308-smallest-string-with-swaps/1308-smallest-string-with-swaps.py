@@ -21,8 +21,7 @@ class unionFind:
             else:
                 self.root[root_y] = root_x
                 self.rank[root_x] += 1
-    def connected(self, x, y):
-        return self.find(x) == self.find(y) 
+
 
 class Solution:
     def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
