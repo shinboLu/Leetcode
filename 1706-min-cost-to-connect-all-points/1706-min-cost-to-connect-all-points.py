@@ -1,56 +1,54 @@
-class UnionFind:
-    def __init__(self, size: int) -> None:
-        self.group = [0] * size
-        self.rank = [0] * size
+class unionFind:
+    def __init__(self, size) -> None:
+        self.root = [x for x in range(size)]
+        self.rank = [1] * size
 
-        for i in range(size):
-            self.group[i] = i
-    
-    def find(self, node:int):
-        if self.group[node] != node:
-            self.group[node] = self.find(self.group[node])
-        return self.group[node]
+    def find(self, x):
+        if self.root[x] == x:
+            return x
+        
+        self.root[x] = self.find(self.root[x])
+        return self.root[x]
 
-    def join(self, node1: int, node2: int):
-        group1 = self.find(node1)
-        group2 = self.find(node2)
+    def union(self, x, y):
+        root_x = self.find(x)
+        root_y = self.find(y)
 
-        if group1 == group2:
+        if root_x == root_y:
             return False
         
-        if self.rank[group1] > self.rank[group2]:
-            self.group[group2] = group1
-        elif self.rank[group1] < self.rank[group2]:
-            self.group[group1] = group2
-        else:
-            self.group[group1] = group2
-            self.rank[group2] +=1
-        return True
+        if self.rank[root_x] > self.rank[root_y]:
+            self.root[root_y] = root_x
         
+        elif self.rank[root_x] < self.rank[root_y]:
+            self.root[root_x] = root_y
+        
+        else:
+            self.root[root_y] = root_x
+            self.rank[root_x] += 1
+
+        return True
+
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         n = len(points)
-        all_edges= []
+        graph = []
 
-        for curr_node in range(n):
-            for next_node in range(curr_node + 1, n):
-                weight = abs(points[curr_node][0] - points[next_node][0]) + abs(points[curr_node][1] - points[next_node][1])
-                all_edges.append((weight, curr_node, next_node))
-
-            
-        all_edges.sort()
-
-        uf = UnionFind(n)
+        for currNode in range(n):
+            for next_node in range(currNode + 1, n):
+                weight = abs(points[currNode][0] - points[next_node][0]) + abs(points[currNode][1] - points[next_node][1])
+                graph.append((weight, currNode, next_node))
+        graph.sort(key= lambda x: x[0])
+        #print(graph)
+        uf= unionFind(n)
         mst_cost = 0
-        edge_used = 0
+        edges_used = 0
 
-        for weight, node1, node2 in all_edges:
-            if uf.join(node1, node2):
+        for weight, curr_node, next_node in graph:
+            if uf.union(curr_node, next_node):
                 mst_cost += weight
-                edge_used += 1
-                if edge_used == n - 1:
+                edges_used += 1
+                if edges_used == n -1:
                     break
-        return mst_cost
 
-        
-        
+        return mst_cost
