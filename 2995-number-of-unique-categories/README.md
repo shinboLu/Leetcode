@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/number-of-unique-categories">2995. Number of Unique Categories</a></h2><h3>Medium</h3><hr><p>You are given an integer <code>n</code> and an object <code>categoryHandler</code> of class <code>CategoryHandler</code>.</p>
+<h2><a href="https://leetcode.com/problems/number-of-unique-categories">Number of Unique Categories</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>You are given an integer <code>n</code> and an object <code>categoryHandler</code> of class <code>CategoryHandler</code>.</p>
 
 <p>There are <code>n&nbsp;</code>elements, numbered from <code>0</code> to <code>n - 1</code>. Each element has a category, and your task is to find the number of unique categories.</p>
 
