@@ -6,24 +6,21 @@ class Solution:
             graph[u].append(v)
             indegree[v] += 1
         queue = collections.deque()
-        for i in range(len(indegree)):
+        for i in range(1, n+1):
             if indegree[i] == 0:
                 queue.append(i)
-        step = 0 
-        studied = -1
-        #print(studied)
+        semesters = 0 
         while queue:
-            length = len(queue)
-            for _ in range(length):
-                cur_node = queue.popleft()
-                studied += 1
-                print(studied)
-                for next_node in graph[cur_node]:
-                    indegree[next_node] -= 1
-                    if indegree[next_node] == 0:
-                        queue.append(next_node)
-            step += 1
+            level_len = len(queue)
+            for _ in range(level_len):
+                cur_class = queue.popleft()
+                n -= 1
+                for next_class in graph[cur_class]:
+                    indegree[next_class] -= 1
+                    if indegree[next_class] == 0:
+                        queue.append(next_class)
+            semesters += 1
 
-        return step if studied == n else -1
-                
-    
+        return semesters if n == 0 else -1
+
+
