@@ -7,7 +7,6 @@ class Solution:
             graph[v].append((u, toll))
 
         cost = {(k,c): float('inf') for k in range(discounts+1) for c in range(n)}
-
         queue = []
         queue.append((0,discounts,0))
         heapify(queue)
