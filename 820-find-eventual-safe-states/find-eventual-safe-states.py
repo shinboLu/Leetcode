@@ -9,7 +9,6 @@ class Solution:
             for node in graph[i]:
                 adj[node].append(i)
                 indegree[i] += 1
-        print(adj)
         for i in range(len(graph)):
             if indegree[i] == 0:
                 queue.append(i)
