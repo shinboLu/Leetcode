@@ -1,38 +1,33 @@
+from heapq import heappush, heapify, heappop
 class Solution:
     def minimumDistance(self, n: int, edges: List[List[int]], s: int, marked: List[int]) -> int:
+        graph = collections.defaultdict(list)
+
+        for u, v, w in edges:
+            graph[u].append((v,w))
+        if len(graph[s]) == 0:
+            return -1
+
         
-        ## use dijkstra and return the minimum
-        ## using dijkstra find minimum distance of all nodes from s
-        ## then find the min of distances for nodes that belong to marked array
-        graph = {x:[] for x in range(n)}
-
-        for v1, v2, wt in edges:
-            graph[v1].append([v2,wt])
-
-        ## dijkstra algorithm
+        hq = [(0, s)]
+        heapify(hq)
         visited = set()
-        pq = []
-        dist = {x:float('inf') for x in range(n)}
-        dist[s] = 0
-        heapq.heappush(pq, (0, s))
 
-        while pq:
-            cost, node = heapq.heappop(pq)
-            visited.add(node)
+        distance = {x:float('inf') for x in range(n)}
+        distance[s] = 0
 
-            for nei, nei_cost in graph[node]:
-                if nei in visited:
+        while hq:
+            cost, dest = heappop(hq)
+            visited.add(dest)
+            for next_city, next_cost in graph[dest]:
+                if next_city in visited:
                     continue
-                new_cost = cost + nei_cost
-                if dist[nei] > new_cost:
-                    dist[nei] = new_cost
-                    heapq.heappush(pq, (new_cost, nei))
+                if distance[next_city] > cost + next_cost:
+                    distance[next_city] = cost + next_cost
+                    heappush(hq, (cost + next_cost, next_city))
 
-        ## iterate over the marked list to find min dist of any node from s
-        ans = float('inf')
+        res = float('inf')
         for node in marked:
-            ans = min(ans, dist[node])
+            res = min(res, distance[node])
 
-        return ans if ans!=float('inf') else -1
-
-        
+        return res if res !=float('inf') else -1
