@@ -7,18 +7,16 @@
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
 
-        def dfs_return_currNode_in_range(root, minVal, maxVal):
+        def dfs_return_boolean(root, minVal, maxVal):
             if not root:
                 return True
-
+            
             if root.val <= minVal or root.val >= maxVal:
                 return False
             
-            left = dfs_return_currNode_in_range(root.left, minVal, root.val)
-            right = dfs_return_currNode_in_range(root.right, root.val, maxVal)
+            left = dfs_return_boolean(root.left, minVal, root.val)
+            right = dfs_return_boolean(root.right, root.val, maxVal)
 
             return left and right
 
-        
-        return dfs_return_currNode_in_range(root, float('-inf'), float('inf'))
-        
+        return dfs_return_boolean(root, float('-inf'), float('inf'))
