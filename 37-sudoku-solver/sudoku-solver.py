@@ -9,8 +9,11 @@ class Solution:
             """
             Check if one could place a number d in (row, col) cell
             """
-            return not (d in rows[row] or d in columns[col] or \
-                    d in boxes[box_index(row, col)])
+            if d not in rows[row] and d not in columns[col] and d not in boxes[box_index(row, col)]:
+                return True
+            return False
+            # return not (d in rows[row] or d in columns[col] or \
+            #         d in boxes[box_index(row, col)])
         
         def place_number(d, row, col):
             """
