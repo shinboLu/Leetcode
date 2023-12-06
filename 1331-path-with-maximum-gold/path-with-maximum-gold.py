@@ -2,7 +2,7 @@ class Solution:
     def getMaximumGold(self, grid: List[List[int]]) -> int:
         DIR = [[0,1], [1,0], [-1,0], [0, -1]]
         nrow, ncol = len(grid), len(grid[0])
-
+        visited = set()
         max_gold = 0
 
         def backtracking(x, y, cur):
@@ -22,7 +22,6 @@ class Solution:
         for row in range(nrow):
             for col in range(ncol):
                 if grid[row][col] != 0:
-                    visited = set()
                     backtracking(row, col, 0)
 
         return max_gold
