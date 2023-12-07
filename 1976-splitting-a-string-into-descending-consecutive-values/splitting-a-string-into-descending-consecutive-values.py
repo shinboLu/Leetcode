@@ -1,20 +1,20 @@
 class Solution:
     def splitString(self, s: str) -> bool:
-        res = []
-        def backtracking_return_boolean(index, prev):
-            if index == len(s):
-                return True
 
-            for i in range(index, len(s)):
-                val = int(s[index:i+1])
-                if val + 1 == prev and backtracking_return_boolean(i+1, val):
+        def backtrack(i, prev):
+            if i == len(s):
+                return True
+            
+            for j in range(i, len(s)):
+                cur_num = int(s[i:j + 1])
+                if prev - cur_num == 1 and backtrack(j + 1, cur_num):
                     return True
             return False
-
-        for i in range(len(s)-1):
-            val = int(s[:i+1])
-            if backtracking_return_boolean(i+1, val):
-                return True
         
+        for i in range(len(s) - 1):
+            val = int(s[:i + 1])
+            if backtrack(i + 1, val):
+                return True
         return False
 
+        
