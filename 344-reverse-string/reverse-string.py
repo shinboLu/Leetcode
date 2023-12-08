@@ -3,12 +3,10 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        def recursion(start, end, ls):
-            if start >= end:
-                return
 
-            ls[start], ls[end] = ls[end], ls[start]
+        def recursion(start, end):
+            if start < end:
+                s[start], s[end] = s[end], s[start]
+                recursion(start+1, end-1)
 
-            return recursion(start+1, end-1, ls)
-
-        recursion(0, len(s)-1, s)
+        recursion(0, len(s)-1)
