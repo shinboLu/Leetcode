@@ -4,9 +4,9 @@ class Solution:
         Do not return anything, modify s in-place instead.
         """
 
-        def recursion(start, end):
-            if start < end:
-                s[start], s[end] = s[end], s[start]
-                recursion(start+1, end-1)
+        def recursion(left, right):
+            if left<right:
+                s[left], s[right] = s[right], s[left]
+                recursion(left+1, right-1)
 
         recursion(0, len(s)-1)
