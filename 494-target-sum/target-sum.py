@@ -1,29 +1,23 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        dp = {}
+        memo = {}
 
         def backtracking(idx, total):
             if idx == len(nums):
-                return 1 if total == target else 0
+                if total == target:
+                    return 1
+                else:
+                    return 0
 
-            ## if the key exists, then it's in the cache, return it
+            
             key = (idx, total)
-            if key in dp:
-                return dp[key]
 
-            dp[key] = (backtracking(idx + 1, total + nums[idx]) +
-                        backtracking(idx + 1, total - nums[idx]))
-            
-            return dp[(key)]
+            if key in memo:
+                return memo[key]
 
-        return backtracking(0, 0)
-        
+            memo[key] = (backtracking(idx+1, total + nums[idx]) + backtracking(idx+1, total-nums[idx]))
 
-            
+            return memo[key]
 
 
-
-
-
-
-            
+        return backtracking(0,0)
