@@ -12,22 +12,23 @@ class Solution:
             if left > right:
                 res.append(None)
                 return res
-            
+
             if (left, right) in memo:
-                return memo[(left,right)]
-            
+                return memo[(left, right)]
+
             for i in range(left, right+1):
-                leftSubTree = createAllTree(left, i-1)
-                rightSubTree = createAllTree(i+1, right)
+                left_sub_tree = createAllTree(left, i-1)
+                right_sub_tree = createAllTree(i+1, right)
 
-                for leftNode in leftSubTree:
-                    for rightNode in rightSubTree:
-                        root = TreeNode(i, leftNode, rightNode)
-                        res.append(root)
+                for left_node in left_sub_tree:
+                    for right_node in right_sub_tree:
+                        tree = TreeNode(i, left_node, right_node)
+                        res.append(tree)
+                
+            memo[(left,right)] = res
 
-            memo[(left, right)] = res
-            return res
+            return res 
 
         return createAllTree(1, n)
-
             
+ 
