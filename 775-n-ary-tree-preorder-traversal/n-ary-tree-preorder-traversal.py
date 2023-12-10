@@ -9,11 +9,15 @@ class Node:
 class Solution:
     def preorder(self, root: 'Node') -> List[int]:
         res = []
-        def recur(root):
-            if root:
-                res.append(root.val)
-                for child in root.children:
-                    recur(child)
+        def recursion(root, output):
+            if not root:
+                return
 
-        recur(root)
-        return res
+            res.append(root.val)
+            for child in root.children:
+                recursion(child, res)
+
+        recursion(root, res)
+        return res 
+            
+
