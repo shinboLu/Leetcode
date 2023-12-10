@@ -8,26 +8,39 @@ class Solution:
     def largestValues(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
-        level_container = [] 
-        queue = collections.deque()
-        queue.append(root)
 
-        while queue:
-            level = []
-            n = len(queue)
-            for i in range(n):
-                curr = queue.popleft()
-                level.append(curr.val)
-                if curr.left:
-                    queue.append(curr.left)
-                if curr.right:
-                    queue.append(curr.right)
-            level_container.append(level)
         res = []
-        for level in level_container:
-            level_max = max(level)
-            res.append(level_max)
-        return res 
+        ans = []
+
+        def bfs(root):
+            queue = collections.deque()
+            queue.append(root)
+
+            while queue:
+                level_val = []
+                n = len(queue)
+                for i in range(n):
+                    curr = queue.popleft()
+                    level_val.append(curr.val)
+                    if curr.left:
+                        queue.append(curr.left)
+                    if curr.right:
+                        queue.append(curr.right)
+                res.append(level_val)
+
+        bfs(root)
+
+        for level in res:
+            ans.append(max(level))
+        
+        return ans 
+            
+
+        
+        
+
+
+
 
 
 
