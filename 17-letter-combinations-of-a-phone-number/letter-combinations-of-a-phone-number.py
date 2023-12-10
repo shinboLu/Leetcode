@@ -12,22 +12,18 @@ class Solution:
             '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z']
         }
-
         res = []
-
-        def backtracking_update_combination(start,path):
-            if start == len(digits):
-                res.append(''.join(path))
+        def backtracking(index, combs):
+            if index == len(digits):
+                res.append(''.join(combs))
                 return
-
-            next_digit = digits[start]
+            next_digit = digits[index]
 
             for letter in graph[next_digit]:
-                path.append(letter)
-                backtracking_update_combination(start+1, path)
-                path.pop()
+                combs.append(letter)
+                backtracking(index+1, combs)
+                combs.pop()
 
-        backtracking_update_combination(0, [])
+        backtracking(0, [])
+
         return res
-
-
