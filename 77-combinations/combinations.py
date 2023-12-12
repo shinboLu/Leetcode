@@ -2,15 +2,29 @@ class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         res = []
 
-        def backtracking_update_res(combs, start, remain):
-            if remain == 0:
-                res.append(combs.copy())
+        ## store all possible and correct combination 
+        def bt_update_res(index, path):
+          
+            if index == n + 1:
+                if len(path) == k:
+                    res.append(path.copy())
+                return 
+            if len(path) == k:
+               
+                res.append(path.copy())
+             
+                return 
 
-            else:
-                for i in range(start, n + 1 ):
-                    combs.append(i)
-                    backtracking_update_res(combs, i + 1, remain-1)
-                    combs.pop()
+ 
+            for i in range(index, n+1):
+                path.append(i)
+                bt_update_res(i + 1, path)
+          
+                path.pop()
 
-        backtracking_update_res([], 1, k)
-        return res
+        bt_update_res(1, [])
+
+
+        return res 
+                
+            
