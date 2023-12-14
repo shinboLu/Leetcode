@@ -1,7 +1,7 @@
 from string import ascii_uppercase
 class Solution:
     def numDecodings(self, s: str) -> int:
-        @lru_cache(maxsize=None)
+        @lru_cache(maxsize=2000)
         def backtracking(index):
             if index == len(s):
                 return 1
