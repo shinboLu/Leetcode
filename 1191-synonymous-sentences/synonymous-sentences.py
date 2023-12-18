@@ -35,23 +35,24 @@ class Solution:
         words = text.split(' ')
         n = len(words)
 
-        def dfs(index, words):
-            if index == n: 
-                res.append(' '.join(words ))
-                return 
-            else:
-                for i in range(index, len(words)):
-                    temp = words[i]
-                    if temp not in word_id_map:
-                        continue
-                    word_parent = uf.find(word_id_map[temp])
-                    for j, _ in enumerate(uf.root):
-                        root_j = uf.find(j)
-                        if root_j == word_parent and temp != id_word_map[j]:
-                            words[i] = id_word_map[j]
-                            dfs(i + 1, words)
-                    words[i] = temp 
-                res.append(' '.join(words))
+        def backtrack(index, combs):
+            #if index == n:
+            res.append(' '.join(combs))
+            #    return 
+            
+            for i in range(index, n):
+                cur_word = words[i]
+                if cur_word not in word_id_map:
+                    continue
 
-        dfs(0, words)
+                cur_root = uf.find(word_id_map[cur_word])
+                for j, _ in enumerate(uf.root):
+                    root_j = uf.find(j)
+                    if root_j == cur_root and cur_word != id_word_map[j]:
+                        words[i] = id_word_map[j]
+                        backtrack(i+1, words )
+                words[i] = cur_word
+            #res.append(' '.join(combs))
+        backtrack(0, words)
+
         return sorted(res)
