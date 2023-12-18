@@ -7,21 +7,24 @@ class Solution:
 
         def backtracking(x, y, cur):
             nonlocal max_gold
-            if x < 0 or x > nrow-1 or y < 0 or y > ncol-1 or grid[x][y]==0 or (x,y) in visited:
+            if x < 0 or x >= nrow or y < 0 or y >= ncol or grid[x][y] == 0 or (x, y) in visited:
                 return
-            
-            max_gold = max(max_gold, cur+grid[x][y])
 
+            max_gold = max(max_gold, cur + grid[x][y])
             visited.add((x,y))
-            for dx, dy in DIR:
-                nx, ny = x + dx, y + dy
-                backtracking(nx, ny, cur+grid[x][y])
 
+            for dx, dy in DIR: 
+                nx, ny = dx + x, dy + y
+                max_gold = max(max_gold, cur + grid[x][y])
+                visited.add((x,y))
+                backtracking(nx, ny, cur + grid[x][y])
             visited.remove((x,y))
+
 
         for row in range(nrow):
             for col in range(ncol):
-                if grid[row][col] != 0:
-                    backtracking(row, col, 0)
+                if grid[row][col]!= 0:
+                    backtracking(row, col , 0)
 
         return max_gold
+                
