@@ -36,9 +36,7 @@ class Solution:
         n = len(words)
 
         def backtrack(index, combs):
-            #if index == n:
             res.append(' '.join(combs))
-            #    return 
             
             for i in range(index, n):
                 cur_word = words[i]
@@ -52,7 +50,8 @@ class Solution:
                         words[i] = id_word_map[j]
                         backtrack(i+1, words )
                 words[i] = cur_word
-            #res.append(' '.join(combs))
+
+                
         backtrack(0, words)
 
         return sorted(res)
