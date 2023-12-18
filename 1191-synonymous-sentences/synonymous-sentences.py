@@ -1,62 +1,57 @@
-from collections import defaultdict
+class unionFind:
+    def __init__(self, size) -> None:
+        self.root = [x for x in range(size)]
+
+    def find(self, x):
+        if self.root[x] == x:
+            return x
+        self.root[x] = self.find(self.root[x])
+        return self.root[x]
+
+    def union(self, x, y):
+        root_x, root_y = self.find(x), self.find(y)
+        if root_x != root_y:
+            self.root[root_x] = root_y
+
 class Solution:
     def generateSentences(self, synonyms: List[List[str]], text: str) -> List[str]:
-        graph = defaultdict(list)
-        for n1, n2 in synonyms:
-            graph[n1].append(n2)
-            graph[n2].append(n1)
-        
-        word_to_syn = defaultdict(set)
+        ## building relations between synonyms
+        uf = unionFind(len(synonyms) * 2 )
+        cur_id, word_id_map, id_word_map = 0, collections.defaultdict(int), collections.defaultdict(str)
 
-        def dfs(word):
-            if word in syns:
-                return
-            syns.add(word)
-            for edge in graph[word]:
-                dfs(edge)
+        for a, b in synonyms:
+            if a not in word_id_map:
+                word_id_map[a] = cur_id
+                id_word_map[cur_id] = a
+                cur_id += 1
+            if b not in word_id_map:
+                word_id_map[b] = cur_id
+                id_word_map[cur_id] = b
+                cur_id += 1
+            a_id, b_id = word_id_map[a], word_id_map[b]
+            uf.union(a_id, b_id)
         
-        for key in graph.keys():
-            syns = set()
-            dfs(key)
-            word_to_syn[key] = syns
-        
-        sentence = text.split()
-        ans = []
+        res = []
+        words = text.split(' ')
+        n = len(words)
 
-        def backtrack(i):
-            if i == len(sentence):
-                ans.append(' '.join(sentence))
-                return
-            curr_word = sentence[i]
-            if curr_word in word_to_syn:
-                for syn in word_to_syn[curr_word]:
-                    sentence[i] = syn
-                    backtrack(i + 1)
-                    sentence[i] = curr_word
+        def dfs(index, words):
+            if index == n: 
+                res.append(' '.join(words ))
+                return 
             else:
-                backtrack(i + 1)
-        
-        backtrack(0)
-        ans.sort()
-        return ans
+                for i in range(index, len(words)):
+                    temp = words[i]
+                    if temp not in word_id_map:
+                        continue
+                    word_parent = uf.find(word_id_map[temp])
+                    for j, _ in enumerate(uf.root):
+                        root_j = uf.find(j)
+                        if root_j == word_parent and temp != id_word_map[j]:
+                            words[i] = id_word_map[j]
+                            dfs(i + 1, words)
+                    words[i] = temp 
+                res.append(' '.join(words))
 
-
-                        
-
-        
-        
-
-
-
-
-
-        
-                        
-                    
-
-            
-                        
-
-            
-
-        
+        dfs(0, words)
+        return sorted(res)
