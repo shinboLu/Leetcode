@@ -1,16 +1,13 @@
 class Solution:
     def maxLength(self, arr: List[str]) -> int:
-        res = 0
+        unique = ['']
+        max_len = 0
 
-        def backtrack(index, combs):
-            nonlocal res 
-            if len(combs) != len(set(combs)):
-                return
+        for i in range(len(arr)):
+            for j in range(len(unique)):
+                temp = arr[i] + unique[j]
+                if len(temp) == len(set(temp)):
+                    unique.append(temp)
+                    max_len = max(max_len, len(temp))
 
-            res = max(res, len(combs))
-
-            for i in range(index, len(arr)):
-                backtrack(i+1, combs+arr[i])
- 
-        backtrack(0, '')
-        return res 
+        return max_len
