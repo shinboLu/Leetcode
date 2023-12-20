@@ -1,26 +1,24 @@
 class Solution:
     def getHappyString(self, n: int, k: int) -> str:
-        letter_set = ['a', 'b', 'c']
         res = []
+        choices = ['a', 'b', 'c']
 
-        def backtracking(idx, curr_comb):
-            if len(curr_comb) == n:
-                res.append(curr_comb)
-                return
+        def backtrack(index, combs):
+            if len(combs) == n:
+                res.append(combs)
+                return 
 
-            for i in range(len(letter_set)):
-                if len(curr_comb) == 0:
-                    backtracking(i, curr_comb+letter_set[i])
-
+            for i in range(len(choices)):
+                letter = choices[i]
+                if len(combs) == 0:
+                    backtrack(i, combs + letter)
                 else:
-                    if curr_comb[-1] == letter_set[i]:
-                        continue
+                    if combs[-1] != letter:
+                        backtrack(i, combs + letter)
 
-                    backtracking(i, curr_comb+letter_set[i])
-        backtracking(0, '')
-
+        backtrack(0, '')
+        
         if k <= len(res):
             return res[k-1]
-        
         else:
             return ''
