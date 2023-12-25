@@ -1,16 +1,18 @@
 class Solution:
     def lexicalOrder(self, n: int) -> List[int]:
         res = []
-        def dfs(index):
+
+        def backtrack(index):
             if index > n:
-                return 
-            
+                return
+
             res.append(index)
 
             for i in range(0, 10):
-                dfs(index * 10 + i)
+                backtrack(index * 10 + i)
+
 
         for i in range(1, 10):
-            dfs(i)
+            backtrack(i) 
 
         return res 
