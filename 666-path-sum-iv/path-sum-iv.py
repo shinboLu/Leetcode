@@ -1,45 +1,34 @@
-class TreeNode:
-    def __init__(self, val, left = None, right = None):
-        self.val = val
-        self.left = left
-        self.right = right
+from collections import defaultdict
 class Solution:
     def pathSum(self, nums: List[int]) -> int:
-        tree = {}
-        
+        d = defaultdict(lambda: defaultdict(lambda: 0))
+
         for num in nums:
             depth = int(str(num)[0])
             pos = int(str(num)[1])
             val = int(str(num)[2])
 
-            node = TreeNode(val)
+            d[depth][pos] = val 
 
-            tree[(depth, pos)] = node
+        res = 0
 
-            if depth == 1:
-                root = node
+        def dfs(depth, pos, cur_res):
+            nonlocal res 
+            next_left_pos = pos * 2 -1
+            next_right_pos = pos * 2 
 
-            else:
-                parent = tree[(depth-1, (pos+1)//2)]
+            if depth + 1 not in d or next_left_pos not in d[depth+1] and next_right_pos not in d[depth+1]:
+                res += cur_res + d[depth][pos]
+                return 
 
-                if pos % 2 == 1:
-                    parent.left = node
-                else:
-                    parent.right = node
+            if next_left_pos in d[depth+1]:
+                dfs(depth+1, next_left_pos, cur_res+d[depth][pos])
+            
+            if next_right_pos in d[depth+1]:
+                dfs(depth+1, next_right_pos, cur_res + d[depth][pos])
 
-        res=0
+        dfs(1,1,0)
 
-        stack = [(root, root.val)]
-
-        while stack:
-            node, val = stack.pop()
-            if node:
-                if not node.left and not node.right:
-                    res += val
-                if node.left:
-                    stack.append((node.left, val + node.left.val))
-                if node.right:
-                    stack.append((node.right, val + node.right.val))
-        return res 
+        return res
 
 
