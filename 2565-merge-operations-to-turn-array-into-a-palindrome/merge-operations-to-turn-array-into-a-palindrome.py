@@ -8,17 +8,15 @@ class Solution:
             if nums[left] == nums[right]:
                 left += 1
                 right -= 1
-
             else:
-                if nums[left] + nums[left+1] < nums[right] + nums[right -1]:
+                if nums[left] + nums[left+1] < nums[right] + nums[right-1]:
                     nums[left+1] += nums[left]
                     left += 1
-                else: 
+                else:
                     nums[right-1] += nums[right]
 
                     right -= 1
                 res += 1
-            
-        return res 
 
+        return res 
 
