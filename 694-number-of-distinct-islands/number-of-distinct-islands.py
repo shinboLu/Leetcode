@@ -19,13 +19,16 @@ class Solution:
             dfs(x, y+1, 'R')
             dfs(x-1, y, 'U')
             dfs(x, y - 1, 'L')
+            ##The solution to this is that we also need to record where we backtracked. 
+            ##      This occurs each time we exit a call to the dfs(...) function. 
+            ##      We'll do this by appending a 0 to the string.
             islands_path.append('0')
 
         unique_islands = set()
         for row in range(nrow):
             for col in range(ncol):
                 islands_path = []
-                dfs(row, col, '0')
+                dfs(row, col, '')
                 if islands_path:
                     unique_islands.add(tuple(islands_path))
         return len(unique_islands)
