@@ -17,20 +17,20 @@ class Solution:
 
         while queue:
             level += 1
-            sum_at_cur_level = 0
+            cur_level_sum = 0 
 
             for _ in range(len(queue)):
-                node = queue.popleft()
-                sum_at_cur_level += node.val
+                cur = queue.popleft()
+                cur_level_sum += cur.val
 
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
+                if cur.left:
+                    queue.append(cur.left)
+                
+                if cur.right:
+                    queue.append(cur.right)
 
-            if max_sum < sum_at_cur_level:
-                max_sum, res = sum_at_cur_level, level
+            if max_sum < cur_level_sum:
+                max_sum, res = cur_level_sum, level
 
-        return res
-
+        return res 
 
