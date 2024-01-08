@@ -10,7 +10,6 @@ class Solution:
 
         for s in strs:
             sorted_s = ''.join(sorted(s))
-            print(sorted_s)
             counter[sorted_s].append(s) 
 
         res = []
