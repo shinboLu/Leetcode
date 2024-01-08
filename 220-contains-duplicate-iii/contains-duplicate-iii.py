@@ -7,7 +7,7 @@ class Solution:
         # A lambda function generate buckey key given a value
         bucket_key = lambda x: (x-min_val) // (valueDiff +1)
         
-        d = collections.defaultdict(lambda: sys.maxsize)
+        d = collections.defaultdict(lambda: float('inf'))
 
         for i, num in enumerate(nums):
             num_bucket_key = bucket_key(num)
