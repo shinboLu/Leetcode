@@ -1,19 +1,19 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
+        if not s:
+            return []
         res = []
-        def isValid(comb):
-            return comb == comb[::-1]
-
         def backtrack(index, combs):
             if index == len(s):
                 res.append(combs.copy())
                 return 
+            
+            for i in range(index, len(s)):
+                next_str = s[index:i+1]
+                if next_str == next_str[::-1]:
+                    combs.append(next_str)
+                    backtrack(i+1,combs)
+                    combs.pop()
 
-            for i in range(index+1, len(s)+1):
-                next_string = s[index:i]
-                print(next_string)
-                if isValid(next_string):
-                    backtrack(i, combs + [next_string])
-
-        backtrack(0,[])
+        backtrack(0, [])
         return res
