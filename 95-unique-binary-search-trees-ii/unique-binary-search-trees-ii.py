@@ -7,28 +7,26 @@
 class Solution:
     def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
         memo = {}
-        def createAllTree(left, right): 
+
+        def backtrack(left, right):
             res = []
             if left > right:
                 res.append(None)
                 return res
 
             if (left, right) in memo:
-                return memo[(left, right)]
+                return memo[(left,right)]
 
             for i in range(left, right+1):
-                left_sub_tree = createAllTree(left, i-1)
-                right_sub_tree = createAllTree(i+1, right)
+                left_sub_tree = backtrack(left,i - 1)
+                right_sub_tree = backtrack(i+1, right)
 
                 for left_node in left_sub_tree:
                     for right_node in right_sub_tree:
                         tree = TreeNode(i, left_node, right_node)
                         res.append(tree)
-                
+
             memo[(left,right)] = res
-
-            return res 
-
-        return createAllTree(1, n)
+            return res
+        return backtrack(1, n)
             
- 
