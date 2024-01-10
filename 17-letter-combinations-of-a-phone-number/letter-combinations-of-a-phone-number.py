@@ -14,16 +14,16 @@ class Solution:
         }
         res = []
         def backtracking(index, combs):
-            if index == len(digits):
+            if len(combs) == len(digits):
                 res.append(''.join(combs))
                 return
-            next_digit = digits[index]
+            cur_num = digits[index]
 
-            for letter in graph[next_digit]:
+            for letter in graph[cur_num]:
+                print(letter)
                 combs.append(letter)
-                backtracking(index+1, combs)
+                print(combs)
+                backtracking(index + 1, combs)
                 combs.pop()
-
         backtracking(0, [])
-
         return res
