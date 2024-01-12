@@ -1,15 +1,9 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        memo = {}
-        memo[1] = 1
-        memo[2] = 2
+        dp = [1] * (n+1)
+        #dp[0] = 1 
+        for i in range(2, n+1):
+            dp[i] = dp[i-2] + dp[i-1] 
 
-        def climb(n):
-            if n in memo:
-                return memo[n]
 
-            else:
-                memo[n] = climb(n-1) + climb(n-2)
-                return memo[n]
-
-        return climb(n)
+        return dp[-1]
