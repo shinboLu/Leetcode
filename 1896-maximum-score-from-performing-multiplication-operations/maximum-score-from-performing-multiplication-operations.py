@@ -11,7 +11,6 @@ class Solution:
                                     multipliers[op] * nums[n - 1 - (op - left)] + dp[op + 1][left])
 
 
-        print(dp)
         # dp[0] = nums 
         
         # for i in range(nrow):
