@@ -1,18 +1,20 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        
         res = []
 
-        def backtracking(index, combs):
+        def backtrack(index, combs):
             if index == len(s):
                 res.append(' '.join(combs))
-                return 
+                return
 
             for i in range(index, len(s)):
-                cur = s[index:i+1]
-                if cur in wordDict:
-                    combs.append(cur)
-                    backtracking(i+1, combs)
+                cur_word = s[index:i+1]
+                if cur_word in wordDict:
+                    combs.append(cur_word)
+                    backtrack(i+1, combs)
                     combs.pop()
 
-        backtracking(0,[])
+        backtrack(0, [])
         return res 
+
