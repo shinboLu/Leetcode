@@ -1,40 +1,18 @@
-from string import ascii_uppercase
 class Solution:
     def numDecodings(self, s: str) -> int:
-        @lru_cache(maxsize=2000)
-        def backtracking(index):
-            if index == len(s):
-                return 1
+        n = len(s)
+        dp = [0] * (n+1) 
+        dp[0]= 1
+        if s[0] != '0':
+            dp[1] = 1
+
+        for i in range(2, n+1):
+            if s[i-1] != '0':
+                dp[i] = dp[i-1]
             
-            if s[index] == '0':
-                return 0
+            two_digit = int(s[i-2:i]) 
+            if 10<= two_digit <= 26:
+                dp[i] += dp[i-2]
 
-            if index == len(s)-1:
-                return 1
-            
-            res = backtracking(index+1)
-
-            if int(s[index:index+2]) <= 26:
-                res += backtracking(index+2)
-
-            return res
-
-
-        return backtracking(0)
-            
-
-
-            
-            
-
-
-        backtracking(1,[])
-        print(res)
-        return len(res)
-
-
-
-
-
-
+        return dp[len(s)]
         
