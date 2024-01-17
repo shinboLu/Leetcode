@@ -1,6 +1,6 @@
 class Solution:
     def countVowelStrings(self, n: int) -> int:
-        vowels = ['a', 'e', 'i', 'o', 'u']
+        vowels = ['','a', 'e', 'i', 'o', 'u']
 
         res = []
         def backtrack(index, combs):
@@ -9,13 +9,9 @@ class Solution:
                 return 
 
             for i in range(index,len(vowels)):
-
                 if vowels[i-1] <= vowels[i]:
                     combs.append(vowels[i])
                     backtrack(i, combs)                
                     combs.pop()
-
-        backtrack(-1, [])
-
-
+        backtrack(0, [])
         return len(res)
