@@ -1,14 +1,11 @@
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        prev_row = triangle[0]
-        for row in range(1, len(triangle)):
+        below_row = triangle[-1] 
+        n = len(triangle)
+        for row in reversed(range(n - 1)):       
             curr_row = []
             for col in range(row + 1):
-                smallest_above = math.inf
-                if col > 0:
-                    smallest_above = prev_row[col - 1]
-                if col < row:
-                    smallest_above = min(smallest_above, prev_row[col])
-                curr_row.append(triangle[row][col] + smallest_above)
-            prev_row = curr_row
-        return min(prev_row)
+                smallest_below = min(below_row[col], below_row[col + 1])
+                curr_row.append(triangle[row][col] + smallest_below)
+            below_row = curr_row
+        return below_row[0]
