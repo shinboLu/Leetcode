@@ -8,6 +8,6 @@ class Solution:
 
         for i in range(2, n+1):
             dp[i][1]=1
-            for j in range(2, 6):
+            for j in range(2, rows+1):
                 dp[i][j] = dp[i][j-1] + dp[i-1][j]
         return dp[n][-1]
