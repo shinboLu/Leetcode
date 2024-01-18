@@ -1,17 +1,13 @@
 class Solution:
     def countVowelStrings(self, n: int) -> int:
-        vowels = ['','a', 'e', 'i', 'o', 'u']
+        vowels = ["a","e","i","o","u"]
+        rows = len(vowels)
+        dp = [[0] * (rows+1) for _ in range(n+1)]
+        for i in range(1, 6):
+            dp[1][i] = i
 
-        res = []
-        def backtrack(index, combs):
-            if len(combs) == n:
-                res.append(''.join(combs))
-                return 
-
-            for i in range(index,len(vowels)):
-                if vowels[i-1] <= vowels[i]:
-                    combs.append(vowels[i])
-                    backtrack(i, combs)                
-                    combs.pop()
-        backtrack(0, [])
-        return len(res)
+        for i in range(2, n+1):
+            dp[i][1]=1
+            for j in range(2, 6):
+                dp[i][j] = dp[i][j-1] + dp[i-1][j]
+        return dp[n][-1]
