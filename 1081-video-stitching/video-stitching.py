@@ -9,7 +9,5 @@ class Solution:
                 if start <= i <= end:
                     dp[i] = min(dp[start] +1, dp[i])
 
-        if dp[time] == float('inf'):
-            return -1
 
-        return dp[time]
+        return dp[time] if dp[time] != float('inf') else -1
