@@ -6,23 +6,21 @@ class Solution:
 
         target = nums_sum // 2 
         n = len(nums)
+        dp = set()
+        dp.add(0)
 
-        dp = [[False] * (target+1) for _ in range(n+1)]
-        dp[0][0] = True
+        for i in range(len(nums)-1, -1, -1):
+            cur_num = nums[i] 
+            nextDp = set()
+            for t in dp:
+                nextDp.add(t)
+                nextDp.add(t + cur_num)
 
-        ## i is the ith number in nums
-        for i in range(1, n+1):
-            cur_num = nums[i-1]
+            dp = nextDp
 
-            # j is the jth sum in range(target)
-            for j in range(target+1):
-                if j < cur_num: 
-                    print(dp[i][j-1], i, j-1)
-                    dp[i][j] = dp[i-1][j]
-                else:
-                    dp[i][j] = dp[i-1][j] or dp[i-1][j-cur_num]
-
-        return dp[-1][-1]
+        print(dp)
+        return target in dp
+                
 
 
                 
