@@ -3,7 +3,6 @@ class Solution:
         nums_sum = sum(nums)
         if nums_sum % 2 != 0:
             return False
-
         target = nums_sum // 2 
         n = len(nums)
         dp = set()
@@ -15,10 +14,7 @@ class Solution:
             for t in dp:
                 nextDp.add(t)
                 nextDp.add(t + cur_num)
-
             dp = nextDp
-
-        print(dp)
         return target in dp
                 
 
