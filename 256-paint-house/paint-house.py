@@ -1,6 +1,6 @@
 class Solution:
     def minCost(self, costs: List[List[int]]) -> int:
-        n = len(costs) 
+
         dp = [0,0,0]
 
         for i in range(len(costs)):
