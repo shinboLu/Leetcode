@@ -1,19 +1,23 @@
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        points = collections.defaultdict(int) 
+        counter = collections.Counter(nums)
+        nums_key = sorted(list(counter.keys()))
+        earn1, earn2 = 0, 0
 
-        max_num = 0
+        for i in range(len(nums_key)):
+            curEarn = nums_key[i] * counter[nums_key[i]]
+            if i > 0 and nums_key[i] == nums_key[i-1]+1:
+                temp = earn2
+                earn2 = max(curEarn + earn1, earn2)
+                earn1 = temp
 
-        for num in nums:
-            points[num] += num 
-            max_num = max(max_num, num) 
+            else:
+                temp = earn2
+                earn2 = curEarn + earn2
+                earn1 = temp
+                
 
-        #print(points, max_num)
+        return earn2
 
-        dp = [0] * (max_num+1)
-        dp[1] = points[1]
 
-        for i in range(2, len(dp)):
-            dp[i] = max(dp[i-1], dp[i-2] + points[i])
-
-        return dp[max_num]
+        
