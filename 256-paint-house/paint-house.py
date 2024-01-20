@@ -1,12 +1,14 @@
 class Solution:
     def minCost(self, costs: List[List[int]]) -> int:
-        for n in reversed(range(len(costs)-1)):
-            costs[n][0] += min(costs[n+1][1], costs[n+1][2])
-            costs[n][1] += min(costs[n+1][0], costs[n+1][2])
-            costs[n][2] += min(costs[n+1][0], costs[n+1][1])
+        n = len(costs) 
+        dp = [0,0,0]
 
-        if len(costs) == 0:
-            return 0
-        
-        return min(costs[0])
+        for i in range(len(costs)):
+            dp1 = min(dp[1], dp[2]) + costs[i][0]
+            dp2 = min(dp[0], dp[2]) + costs[i][1]
+            dp3 = min(dp[0], dp[1]) + costs[i][2]
+
+            dp = [dp1, dp2, dp3]
+        return min(dp)
+
 
