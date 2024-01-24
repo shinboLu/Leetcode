@@ -14,6 +14,4 @@ class Solution:
                     max_side = max(max_side, dp[i][j])
 
 
-        print(dp)
-
         return max_side * max_side
