@@ -9,9 +9,7 @@ class Solution:
 
         for i in range(1, n):
             for j in range(n):
-                #print(i,j)
-                # if (0 <= i+1 < n and 0 <= j-1 < n) and (0<=i+1 <n and 0 <= j < n) and (0<=i+1<n and 0 <= j+1 < n): 
-                #     print((matrix[i+1][j-1], matrix[i+1][j], matrix[i+1][j+1]))
+                
                 cur = dp[i-1][j] 
 
                 if j - 1 >= 0:
