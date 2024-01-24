@@ -2,7 +2,6 @@ class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         nrow = len(text1)
         ncol = len(text2)
-
         dp = [[0] * (ncol+1) for _ in range(nrow+1)]
 
         for i in range(nrow-1, -1, -1):
