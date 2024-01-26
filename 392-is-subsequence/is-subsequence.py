@@ -13,7 +13,6 @@ class Solution:
                 else:
                     dp[i][j] = max(dp[i+1][j], dp[i][j+1])
 
-        print(dp[0][0], len(s))
         if dp[0][0] == len(s):
             return True
         else:
