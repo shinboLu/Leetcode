@@ -10,7 +10,7 @@ class Solution:
             else:
                 cur_len = 1
             dp[i] = dp[i-1] + cur_len
-        print(dp)
+
         return dp[-1]
 
 
