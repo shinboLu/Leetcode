@@ -1,31 +1,27 @@
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
-        dists = [[0,1],[1,0], [-1, 0], [0, -1]]
-        nrow = len(mat)
-        ncol = len(mat[0])
-        res = [row[:] for row in mat]
-        def get_nei(x, y):
-            nei = []
-            for dx, dy in dists:
-                nx, ny = x + dx, y + dy 
-                if 0 <= nx < nrow and 0 <= ny < ncol:
-                    nei.append((nx, ny)) 
-            return nei
-        queue = collections.deque()
-        visited = set()
-        for i in range(nrow):
-            for j in range(ncol):
-                if mat[i][j] == 0:
-                    queue.append((i,j,0))
-                    visited.add((i,j))
+        dp = [row[:] for row in mat]
+        m, n = len(dp), len(dp[0])
 
-        while queue:
-            row, col, step = queue.popleft()
-            for nx, ny in get_nei(row, col):
-                if (nx, ny) not in visited:
-                    visited.add((nx, ny))
-                    queue.append((nx, ny, step +1))
-                    res[nx][ny] = step + 1
+        for row in range(m):
+            for col in range(n):
+                min_neighbor = float('inf')
+                if dp[row][col] != 0:
+                    if row > 0:
+                        min_neighbor = min(min_neighbor, dp[row - 1][col])
+                    if col > 0:
+                        min_neighbor = min(min_neighbor, dp[row][col - 1])
+                    dp[row][col] = min_neighbor + 1
+    
+        for row in range(m - 1, -1, -1):
+            for col in range(n - 1, -1, -1):
+                min_neighbor = float('inf')
+                if dp[row][col] != 0:
+                    if row < m - 1:
+                        min_neighbor = min(min_neighbor, dp[row + 1][col])
+                    if col < n - 1:
+                        min_neighbor = min(min_neighbor, dp[row][col + 1])
+                        
+                    dp[row][col] = min(dp[row][col], min_neighbor + 1)
 
-        return res
-
+        return dp
