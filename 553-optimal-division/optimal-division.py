@@ -6,3 +6,4 @@ class Solution:
             return str(nums[0]) + '/' + str(nums[1])
         else:
             return str(nums[0]) + '/(' + '/'.join([str(num) for num in nums[1:]]) + ')'
+
