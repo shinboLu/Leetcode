@@ -1,27 +1,33 @@
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
-        dp = [row[:] for row in mat]
-        m, n = len(dp), len(dp[0])
+        nrow = len(mat)
+        ncol = len(mat[0])
 
-        for row in range(m):
-            for col in range(n):
-                min_neighbor = float('inf')
-                if dp[row][col] != 0:
-                    if row > 0:
-                        min_neighbor = min(min_neighbor, dp[row - 1][col])
-                    if col > 0:
-                        min_neighbor = min(min_neighbor, dp[row][col - 1])
-                    dp[row][col] = min_neighbor + 1
-    
-        for row in range(m - 1, -1, -1):
-            for col in range(n - 1, -1, -1):
-                min_neighbor = float('inf')
-                if dp[row][col] != 0:
-                    if row < m - 1:
-                        min_neighbor = min(min_neighbor, dp[row + 1][col])
-                    if col < n - 1:
-                        min_neighbor = min(min_neighbor, dp[row][col + 1])
-                        
-                    dp[row][col] = min(dp[row][col], min_neighbor + 1)
+        dp = [row for row in mat] 
+
+        for i in range(nrow):
+            for j in range(ncol):
+                min_neigh = float('inf') 
+                if dp[i][j] != 0:
+                    if i > 0:
+                        min_neigh = min(min_neigh, dp[i-1][j])
+
+                    if j > 0: 
+                        min_neigh = min(min_neigh, dp[i][j-1])
+
+                    dp[i][j] = min_neigh + 1
+
+        for i in range(nrow-1, -1, -1):
+            for j in range(ncol-1, -1, -1):
+                min_neigh = float('inf')
+                if dp[i][j] != 0:
+                    if i < nrow-1:
+                        min_neigh = min(min_neigh, dp[i+1][j])
+                    if j < ncol-1:
+                        min_neigh = min(min_neigh,dp[i][j+1])
+
+                    dp[i][j] = min(dp[i][j], min_neigh+1)
 
         return dp
+
+        
