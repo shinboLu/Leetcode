@@ -1,6 +1,6 @@
 class Solution:
     def maxNonDecreasingLength(self, nums1: List[int], nums2: List[int]) -> int:
-        @lru_cache
+        @functools.lru_cache(maxsize=None)
         def dp(idx, prev_val):
             if idx == len(nums1):
                 return 0
