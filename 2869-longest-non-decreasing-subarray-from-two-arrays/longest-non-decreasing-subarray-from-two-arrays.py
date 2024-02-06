@@ -1,24 +1,23 @@
 class Solution:
     def maxNonDecreasingLength(self, nums1: List[int], nums2: List[int]) -> int:
-        @functools.lru_cache(maxsize=None)
-        def dp(idx, prev_val):
-            if idx == len(nums1):
+        @lru_cache(maxsize=None)
+        def dfs(i, prev):
+            if i == len(nums1):
                 return 0
-            
             res = 0
 
-            if not prev_val:
-                 res = dp(idx+1, prev_val)
+            if not prev:
+                res = dfs(i+1, prev)
 
-            if prev_val <= nums1[idx]:
-                res = max(res, dp(idx+1, nums1[idx])+1)
-            
-            if prev_val <= nums2[idx]:
-                res = max(res, dp(idx+1, nums2[idx])+1)
+            if prev <= nums1[i]:
+                res = max(res, dfs(i+1, nums1[i])+1)
+            if prev <= nums2[i]:
+                res = max(res, dfs(i+1, nums2[i])+1)
 
             return res 
 
-        return dp(0,0)
+        return dfs(0,0)
 
+            
+            
 
-        
