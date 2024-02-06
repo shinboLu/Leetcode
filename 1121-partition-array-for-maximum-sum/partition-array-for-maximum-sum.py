@@ -2,22 +2,23 @@ class Solution:
     def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
         memo = {}
 
-        def dp(idx):
-            if idx == len(arr):
+        ## dfs will track at index i, the max sum of this index
+        def dp(i):
+            if i == len(arr):
                 return 0
-            if idx in memo:
-                return memo[idx]
-            cur_max = 0
-            res = 0 
 
-            for j in range(idx, min(len(arr), idx+k)):
-                cur_max = max(cur_max, arr[j])
-                window_size = j - idx + 1
+            if i in memo:
+                return memo[i]
+            
+            cur_max = 0
+            res = 0
+            for j in range(i, min(len(arr), i+k)):
+                cur_max = max(arr[j], cur_max)
+                window_size = j - i + 1
                 res = max(res, dp(j+1) + cur_max * window_size)
-            memo[idx] = res
+            memo[i] = res
+            return res
         
-            return res 
         return dp(0)
 
-        
-
+                    
