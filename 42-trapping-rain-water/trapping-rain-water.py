@@ -1,22 +1,22 @@
 class Solution:
-    def trap(self, height):
-        if not height:
-            return 0
-        ans = 0
-        size = len(height)
-        left_max = [0] * size
-        right_max = [0] * size
-        left_max[0] = height[0]
-        for i in range(1, size):
-            left_max[i] = max(height[i], left_max[i - 1])
-        right_max[size - 1] = height[size - 1]
-        for i in range(size - 2, -1, -1):
-            right_max[i] = max(height[i], right_max[i + 1])
-        for i in range(1, size - 1):
-            ans += min(left_max[i], right_max[i]) - height[i]
-        return ans
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        left_dp = [0] * n
+        right_dp = [0] * n
+        res = 0 
+        left_dp[0] = height[0]
+        right_dp[n-1] = height[n-1]
 
-# Example usage:
-# height = [0,1,0,2,1,0,1,3,2,1,2,1]
-# sol = Solution()
-# print(sol.trap(height))
+        for i in range(1, n):
+            left_dp[i] = max(height[i], left_dp[i-1])
+
+        for i in range(n-2, -1, -1):
+            right_dp[i] = max(height[i], right_dp[i+1])
+
+        for i in range(1, n-1):
+            res += min(left_dp[i], right_dp[i]) - height[i]
+        
+        return res 
+
+        
+
