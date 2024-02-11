@@ -2,18 +2,24 @@ class RandomizedSet:
 
     def __init__(self):
         self.hash_map = {}
+        self.list = []
         
     def insert(self, val: int) -> bool:
         if val in self.hash_map.keys():
             return False
-        self.hash_map[val] = 0
+        self.hash_map[val] = len(self.list)
+        self.list.append(val)
         return True
     
     def remove(self, val: int) -> bool:
         if val in self.hash_map.keys():
+            last_el, idx = self.list[-1], self.hash_map[val]
+            self.list[idx], self.hash_map[last_el] = last_el, idx
+            self.list.pop()
             del self.hash_map[val]
             return True
         return False
+
     def getRandom(self) -> int:
         li = list(self.hash_map.keys())
         return random.choice(li)
