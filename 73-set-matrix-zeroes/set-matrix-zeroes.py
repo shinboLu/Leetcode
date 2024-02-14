@@ -7,8 +7,6 @@ class Solution:
         nrow = len(matrix)
         ncol = len(matrix[0])
 
-        directions = [[0,1], [-1,0], [0,1], [0,-1]]
-
         queue = collections.deque()
 
         for i in range(nrow):
