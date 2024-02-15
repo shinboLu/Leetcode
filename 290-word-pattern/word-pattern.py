@@ -16,5 +16,5 @@ class Solution:
 
         for p in pattern:
             new_str.append(p_s_map.get(p, '0'))
-        print(p_s_map, new_str)
+
         return new_str == s
