@@ -11,10 +11,10 @@ class Solution:
                 cur_num = num
                 current_streak = 1
 
-                while cur_num in num_set:
+                while cur_num+1 in num_set:
                     cur_num += 1
                     current_streak += 1
             
                 longest_streak = max(longest_streak, current_streak)
 
-        return longest_streak-1
+        return longest_streak
