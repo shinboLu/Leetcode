@@ -9,13 +9,10 @@ class Solution:
             while left + 1 < len(nums) and nums[left] + 1 == nums[left+1]:
                 left += 1
             if cur != nums[left]:
-                num_range = str(cur) + '->' + str(nums[left])
-                res.append(num_range)
+                res.append(str(cur) + '->' + str(nums[left]))
+            
             else:
                 res.append(str(nums[left]))
-            left += 1 
 
-        return res 
-
-            
-
+            left += 1
+        return res
