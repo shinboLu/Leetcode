@@ -9,22 +9,27 @@ class Node:
 class Solution:
     def __init__(self):
         self.visited = {} 
+    
+    def getClonedNode(self, node):
+        if node:
+            if node in self.visited:
+                return self.visited[node]
+            else: 
+                self.visited[node] = Node(node.val, None, None)
+                return self.visited[node]
+        return None
 
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head:
-            return 
-        
-        if head in self.visited:
-            return self.visited[head] 
+            return head  
 
-        node = Node(head.val, None, None)
-        self.visited[head] = node 
+        old_node = head  
+        new_node = Node(old_node.val, None, None)
+        self.visited[old_node] = new_node
+        while old_node:
+            new_node.next = self.getClonedNode(old_node.next) 
+            new_node.random = self.getClonedNode(old_node.random)
+            old_node = old_node.next
+            new_node = new_node.next  
 
-        node.next = self.copyRandomList(head.next) 
-        node.random = self.copyRandomList(head.random)
-
-        return node
-
-            
-            
-        return res.next
+        return self.visited[head]
