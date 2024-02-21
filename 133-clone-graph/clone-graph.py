@@ -9,23 +9,22 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        visited = {}
+        if not node:
+            return node 
 
-        def backtracking(node):
-            nonlocal visited
-            if not node:
-                return node
-            
-            if node in visited:
-                return visited[node]
+        visited = {} 
+        queue = collections.deque()
+        queue.append(node)
+        visited[node] = Node(node.val, [])
+
+        while queue:
+            cur_node = queue.popleft()
+            for nei in cur_node.neighbors:
+                if nei not in visited:
+                    visited[nei] = Node(nei.val, [])
+                    queue.append(nei)
+                visited[cur_node].neighbors.append(visited[nei])
+
+        return visited[node]
+
                 
-            cloned_node = Node(node.val, [])
-
-            visited[node] = cloned_node
-
-            if node.neighbors:
-                cloned_node.neighbors = [backtracking(n) for n in node.neighbors]
-            return cloned_node
-        
-        return backtracking(node)
-            
