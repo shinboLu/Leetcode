@@ -12,18 +12,21 @@ class Solution:
             '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z']
         }
-        res = []
-        def backtracking(index, combs):
-            if len(combs) == len(digits):
-                res.append(''.join(combs))
-                return
-            cur_num = digits[index]
 
-            for letter in graph[cur_num]:
-                print(letter)
-                combs.append(letter)
-                print(combs)
-                backtracking(index + 1, combs)
+        res = []
+
+        def bt(idx, combs):
+            if idx == len(digits):
+                res.append(''.join(combs))
+                return 
+
+            cur_num = digits[idx]
+
+            for d in graph[cur_num]:
+                combs.append(d)
+                bt(idx+1, combs)
                 combs.pop()
-        backtracking(0, [])
-        return res
+        bt(0, [])
+
+        return res 
+            
