@@ -10,7 +10,7 @@ class Solution:
             return []
 
         mapper = collections.defaultdict(list)
-        left_bound = right_bound = 1
+        left_bound = right_bound = 0
 
         def dfs(root, row, col):
             if root:
@@ -27,8 +27,7 @@ class Solution:
         for col in range(left_bound, right_bound+1):
             mapper[col].sort(key = lambda x: x[0])
             cur_col = [val for row, val in mapper[col]]
-            if cur_col:
-                res.append(cur_col)
+            res.append(cur_col)
 
         return res 
             
