@@ -1,17 +1,21 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        target = len(graph)-1
         res = []
-        target = len(graph) -1
-
-        def backtracking(node, path):
+        
+        def bt(node, path):
             if node == target:
                 res.append(path.copy())
-                return
+                return 
 
-            for next_node in graph[node]:
-                path.append(next_node)
-                backtracking(next_node, path)
+            for nxt in graph[node]:
+                path.append(nxt)
+                bt(nxt, path)
                 path.pop()
 
-        backtracking(0, [0])
-        return res
+        bt(0, [0])
+
+        return res 
+            
+
+
