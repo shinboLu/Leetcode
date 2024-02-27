@@ -36,17 +36,17 @@ class Codec:
         def decode(data):
             if data[0] == 'None':
                 data.pop(0)
-                return None 
-
+                return
             root = TreeNode(data[0])
             data.pop(0)
+
             root.left = decode(data)
-            root.right = decode(data) 
+            root.right = decode(data)
+
             return root
         data_list = data.split(',')
         return decode(data_list)
-
-        
+            
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
