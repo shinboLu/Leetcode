@@ -18,7 +18,6 @@ class MapSum:
             cur = cur.children[ch] 
             cur.tot_sum += diff
 
-
     def sum(self, prefix: str) -> int:
         cur = self.root
         for ch in prefix:
