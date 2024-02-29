@@ -2,7 +2,7 @@ class TrieNode:
     def __init__(self):
         self.children = {}
         self.word_list = []
-        self.is_end = False
+        #self.is_end = False
 
 class Trie:
     def __init__(self):
@@ -17,7 +17,7 @@ class Trie:
             if len(cur.word_list) < 3:
                 cur.word_list.append(word)
 
-        cur.is_end = True
+        #cur.is_end = True
 
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
