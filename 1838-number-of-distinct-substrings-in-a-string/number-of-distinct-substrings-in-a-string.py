@@ -1,6 +1,6 @@
 class Trie:
     def __init__(self):
-        self.children = [None] * 26
+        self.children = {}
 
 class Solution:
     def countDistinct(self, s: str) -> int:
@@ -10,12 +10,12 @@ class Solution:
         for i in range(len(s)):
             current = root
             for j in range(i, len(s)):
-                index = ord(s[j]) - ord('a')
+                ch = s[j]
 
-                if current.children[index] is None:
-                    current.children[index] = Trie()
+                if ch not in current.children:
+                    current.children[ch] = Trie()
                     count += 1
 
-                current = current.children[index]
+                current = current.children[ch]
 
         return count
