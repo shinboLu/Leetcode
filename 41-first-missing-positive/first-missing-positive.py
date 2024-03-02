@@ -13,7 +13,5 @@ class Solution:
             return 1
 
         for i in range(1, max_val+2):
-            print(i)
             if i not in nums_set:
-                print('here')
                 return i
