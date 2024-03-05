@@ -1,17 +1,19 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
-        @lru_cache(None)
-        def dfs(idx):
-            if idx == len(nums)-1:
-                return True
-            
-            if idx >= len(nums) or nums[idx] == 0:
-                return False
-            
-            for i in range(1, nums[idx]+1):
-                if dfs(idx+i):
-                    return True
-            return False
-        
-        return dfs(0)
-            
+        n = len(nums)
+        dp = [False] * n
+        dp[0] = True
+        print(dp)
+        for i in range(n):
+            if dp[i]:
+                for j in range(1, nums[i]+1):
+                    if i+j < n: 
+                        dp[i+j] = True 
+
+                    if i+j == n-1:
+                        return True 
+
+
+        return dp[n-1]
+
+
