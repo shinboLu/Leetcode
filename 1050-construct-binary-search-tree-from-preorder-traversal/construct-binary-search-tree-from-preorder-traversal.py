@@ -7,27 +7,29 @@
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
         inorder = sorted(preorder)
-        preorder_idx = 0
+        root_idx = 0 
         inorder_map = {val:idx for idx, val in enumerate(inorder)}
-
+        
         def dfs(left, right):
-            nonlocal preorder_idx
             if left == right:
                 return 
-            
-            root_val = preorder[preorder_idx]
+
+            nonlocal root_idx
+            root_val = preorder[root_idx]
             root = TreeNode(root_val)
+            root_idx += 1
 
             cur_idx = inorder_map[root_val]
-            
-            preorder_idx += 1
 
             root.left = dfs(left, cur_idx)
             root.right = dfs(cur_idx+1, right)
 
             return root 
-
+        
         return dfs(0, len(preorder))
+
+
+
 
 
 
