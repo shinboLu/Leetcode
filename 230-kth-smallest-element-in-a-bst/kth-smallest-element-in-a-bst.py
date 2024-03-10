@@ -7,17 +7,18 @@
 class Solution:
     def kthSmallest(self, root, k):
         res = []
-        def inOrder(root):
+        def inorder(root):
             if not root:
-                return None
-
-            inOrder(root.left)
+                return 
+            
+            inorder(root.left)
             res.append(root.val)
-            inOrder(root.right)
-
+            inorder(root.right) 
         
-        inOrder(root)
+        inorder(root)
 
         return res[k-1]
+        
+
 
             
