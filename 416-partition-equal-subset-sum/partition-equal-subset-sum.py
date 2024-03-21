@@ -8,6 +8,10 @@ class Solution:
         tot_sum = tot_sum // 2
         # 定义二维数组 dp
         dp = [[False] * (tot_sum + 1) for _ in range(n + 1)]
+
+        for i in range(n+1):
+            dp[i][0] = True 
+
         # base case
         for i in range(n + 1):
             dp[i][0] = True
