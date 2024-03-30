@@ -8,6 +8,7 @@ class Solution:
         count = {} 
 
         while right < len(s):
+            #print(count)
             count[s[right]] = right 
             right += 1
 
