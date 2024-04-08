@@ -1,6 +1,7 @@
 class unionFind:
     def __init__(self, size) -> None:
         self.root = [i for i in range(size)]
+        self.rank = [1] * size
 
     def find(self, x ):
         if x == self.root[x]:
@@ -12,7 +13,13 @@ class unionFind:
         root_x = self.find(x)
         root_y = self.find(y)
 
-        self.root[root_x] = root_y
+        if self.rank[root_x] > self.rank[root_y]:
+            self.root[root_y] = root_x
+        elif self.rank[root_x] < self.root[root_y]:
+            self.root[root_x] = self.root[root_y]
+        else:
+            self.root[root_y] = root_x
+            self.rank[root_x] += 1
 
 class Solution:
     def equationsPossible(self, equations: List[str]) -> bool:
