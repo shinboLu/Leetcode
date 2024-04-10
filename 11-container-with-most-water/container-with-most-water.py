@@ -4,13 +4,14 @@ class Solution:
         res = float('-inf')
 
         while left < right:
-            cur_length = right - left 
-            cur_height = min(height[left], height[right])
-            cur_fill = cur_length * cur_height
-            res = max(res, cur_fill) 
+            cur_len = right - left
+            cur_hei = min(height[left], height[right])
+            cur_area = cur_len * cur_hei
+            res = max(cur_area, res)
 
             if height[left] <= height[right]:
-                left += 1
+                left +=1
             else:
-                right-=1
+                right-=1 
+
         return res 
