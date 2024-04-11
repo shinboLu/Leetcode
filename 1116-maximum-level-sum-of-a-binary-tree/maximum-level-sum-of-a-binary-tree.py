@@ -33,10 +33,7 @@ class Solution:
 
             level_sum.append([cur_sum, level])
 
-        #max_val = max(level_sum)
-
         level_sum.sort(key=lambda x: -x[0])
-        print(level_sum)
         return level_sum[0][1]
 
 
