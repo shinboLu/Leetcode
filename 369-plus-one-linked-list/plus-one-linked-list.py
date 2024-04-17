@@ -14,7 +14,9 @@ class Solution:
                 cur = head
             head = head.next
 
+
         cur.val += 1
+
         cur = cur.next 
 
         while cur:
