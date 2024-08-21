@@ -2,19 +2,18 @@ from string import ascii_lowercase
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-
         if len(strs) <= 1:
             return [strs]
+    
 
-        counter = collections.defaultdict(list)
+        res = [] 
+        word_map = defaultdict(list)
 
-        for s in strs:
-            sorted_s = ''.join(sorted(s))
-            counter[sorted_s].append(s) 
+        for word in strs:
+            sorted_word = ''.join(sorted(word))
+            word_map[sorted_word].append(word)
 
-        res = []
+        for key, value in word_map.items():
+            res.append(value)
 
-        for k, v in counter.items():
-            res.append(v)
-
-        return res 
+        return res
