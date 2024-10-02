@@ -2,12 +2,13 @@ from collections import defaultdict
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         res = [] 
-        tracker = {}
+        mapping = {}
         for i in range(len(nums)):
-            remain = target - nums[i]
-            if remain in tracker:
-                return [i, tracker[remain]]
-            else:
-                tracker[nums[i]] = i 
+            remains = target - nums[i]
+            if remains in mapping:
+                res = [i, mapping[remains]]
 
-        return 
+            else:
+                mapping[nums[i]] = i
+
+        return res
