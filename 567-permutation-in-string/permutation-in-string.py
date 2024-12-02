@@ -1,14 +1,29 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        counter, w = collections.Counter(s1), len(s1)
-        n = 0
-        while n + w <= len(s2):
-            if s2[n] in counter:
-                s2_sub_string_counter = collections.Counter(s2[n:n+w])
-                #print(s2_sub_string_counter)
-                if counter == s2_sub_string_counter:
+        need = defaultdict(int)
+        window = defaultdict(int)
+        for c in s1:
+            need[c] += 1
+        left = 0 
+        right = 0 
+        valid = 0 
+
+        while right < len(s2):
+            c = s2[right]
+            right += 1
+            if c in need:
+                window[c] += 1
+                if window[c] == need[c]:
+                    valid += 1
+            while right-left >= len(s1):
+                if valid == len(need):
                     return True
-            n += 1
-
-
+                d = s2[left] 
+                left += 1
+                if d in need:
+                    if window[d] == need[d]:
+                        valid -= 1
+                    window[d] -= 1
         return False
+                
+            
