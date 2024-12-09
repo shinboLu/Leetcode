@@ -7,7 +7,6 @@ class Solution:
         while left < right:
             left_char = s[left].lower()
             right_char = s[right].lower()
-            print(left_char,right_char)
             if left_char.isalnum() and right_char.isalnum():
                 if left_char == right_char:
                     left+=1
