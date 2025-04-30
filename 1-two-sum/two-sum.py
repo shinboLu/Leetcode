@@ -1,14 +1,14 @@
 from collections import defaultdict
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        res = [] 
-        mapping = {}
-        for i in range(len(nums)):
-            remains = target - nums[i]
-            if remains in mapping:
-                res = [i, mapping[remains]]
+        mapping = defaultdict(int)
 
-            else:
-                mapping[nums[i]] = i
+        for idx, val in enumerate(nums):
+            remains = target-val
 
-        return res
+            if remains in mapping.keys():
+                return [idx, mapping[remains]]
+            
+            mapping[val] = idx
+
+        
