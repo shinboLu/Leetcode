@@ -1,24 +1,24 @@
 class MinStack:
 
     def __init__(self):
-        self.stack = []
-
+        self.res = [] 
+        self.cur_min = float('inf')
     def push(self, val: int) -> None:
-        if not self.stack:
-            self.stack.append((val, val))
-            return 
-        
-        self.stack.append((val, min(self.stack[-1][1], val)))
+        if not self.res:
+            self.res.append([val, val])
+            return
+
+        self.cur_min = min(self.res[-1][1], val)
+        self.res.append([val, self.cur_min])
 
     def pop(self) -> None:
-        self.stack.pop()
+        self.res.pop()
 
     def top(self) -> int:
-        return self.stack[-1][0]
+        return self.res[-1][0]
 
     def getMin(self) -> int:
-        return self.stack[-1][1]
-        
+        return self.res[-1][1]
 
 
 # Your MinStack object will be instantiated and called as such:
