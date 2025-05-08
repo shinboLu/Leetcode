@@ -1,16 +1,23 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        if len(s) < 2:
+            return False
+        pairs = {
+            "}":"{",
+            "]":"[",
+            ")": "("
+            }
 
-        counter = []
-        mapping = {'}':'{', ']':'[', ')':'('}
+        stack = [] 
 
-        for c in s:
-            if c not in mapping:
-                counter.append(c)
-
-            else: 
-                if counter and counter[-1] == mapping[c]:
-                    counter.pop()
+        for char in s:
+            if char not in pairs:
+                stack.append(char)
+            else:
+                if stack and stack[-1] == pairs[char]:
+                    stack.pop()
                 else:
                     return False
-        return True if not counter else False
+        return True if not stack else False
+
+                    
