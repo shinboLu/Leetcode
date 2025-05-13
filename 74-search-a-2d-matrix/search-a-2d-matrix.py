@@ -1,21 +1,19 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         m = len(matrix)
-        if m == 0:
-            return False
         n = len(matrix[0])
 
-        left, right = 0, m * n -1 
+        left = 0
+        right = m*n-1
 
         while left <= right:
-            pivot_idx = (left+right)//2 
-            pivot_val = matrix[pivot_idx // n][pivot_idx % n]
-            if target == pivot_val:
-                return True 
-            else:
-                if target < pivot_val:
-                    right = pivot_idx -1 
-                else:
-                    left = pivot_idx + 1 
-        return False
+            mid = (left+right)//2 
+
+            if matrix[mid//n][mid%n] == target:
+                return True
             
+            elif matrix[mid//n][mid%n] < target:
+                left = mid+1
+            else:
+                right = mid-1
+        return False
