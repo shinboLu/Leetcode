@@ -1,22 +1,35 @@
 class Solution:
     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
-        d = collections.defaultdict(list)
-        c = collections.Counter()            
-        for u, t, w in zip(username, timestamp, website): 
-            d[u].append((t, w))
-            c[u] += 1
-        three_seq_cnt = collections.defaultdict(int)  
-        for u, records in d.items():            
-            records.sort()                            
-            visited = set()                           
-            for i in range(c[u]):                     
-                for j in range(i+1, c[u]):
-                    for k in range(j+1, c[u]):
-                        three_seq = (records[i][1], records[j][1], records[k][1])
-                        if three_seq in visited: 
-                            continue  
-                        three_seq_cnt[three_seq] += 1
-                        visited.add(three_seq)
-                    
-        ans = sorted(three_seq_cnt.items(), reverse=True, key=lambda x: (-x[1], x[0]))
-        return ans[-1][0]
+        # SORT THE WEBSITE INFO BASED ON THE TIMESTAMPS
+        webInfo = []
+        for time, usr, web in zip(timestamp, username, website):
+            webInfo.append((time, usr, web))
+            
+        webInfo.sort(key=lambda x:x[0])
+        # print(webInfo)
+        
+        # FIND THE WEBSITES VISITED BY PARTICULAR USERS
+        websiteVisit = defaultdict(list)
+        for _, usr, web in webInfo:
+            websiteVisit[usr].append(web)
+            
+        # print(websiteVisit)
+        # FIND THE ROUTES IN THE FORM OF TUPLES OF LENGTH 3
+        possibleTuples = defaultdict(int)
+        for usr in websiteVisit:
+            webRoutes = set(combinations(websiteVisit[usr], 3))
+            for webRoute in webRoutes:
+                possibleTuples[webRoute] += 1
+                
+        # print(possibleTuples)
+        # FIND MAX VALUE OF USERS VISITED
+        maxVal, routes = max(possibleTuples.values()), []
+        for r, val in possibleTuples.items():
+            if val == maxVal:
+                routes.append(r)
+                
+        if len(routes) > 1:
+            # SORTS LEXICOGRAPHICALLY
+            routes.sort()
+        
+        return routes[0]
