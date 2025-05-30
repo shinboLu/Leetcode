@@ -1,13 +1,20 @@
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        def hasNum(log):
+            return any(char.isdigit() for char in log)
 
-        def cus_log(log):
-            left, right = log.split(" ", 1)
-
-            if right[0].isalpha():
-                return (0, right, left)
-
+        letter_log = []
+        digit_log = []
+        for i,log in enumerate(logs):
+            splits = log.split(' ')
+            if hasNum(splits[1:]):
+                digit_log.append(log)
             else:
-                return (1,)
+                letter_log.append([' '.join(splits[1:]), splits[0], i])
+        res = []
+        for log in sorted(letter_log):
+            res.append(logs[log[2]])
 
-        return sorted(logs, key = cus_log)
+
+
+        return res + digit_log
