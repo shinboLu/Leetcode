@@ -11,5 +11,5 @@ class Solution:
                 right = mid - 1 
             else: 
                 left = mid + 1 
-        return right +1
+        return left
         
