@@ -1,38 +1,31 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
+        if not nums:
+            return [-1,-1]
+        left = self.findLeft(nums, target)
+        right = self.findRight(nums, target)
+
+        return [left, right]
+    def findLeft(self, nums, target):
+        left, right= 0, len(nums)-1
+        while left <= right:
+            mid = (left+right)//2
+            if nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid -1
+        print(right+1)
+        return right+1 if right+1 >= 0 and right+1 <= len(nums)-1 and nums[right+1] == target else -1
+
+    def findRight(self, nums, target):
         left, right = 0, len(nums)-1
 
-        left = self.getLeft(nums, target)
-        right = self.getRight(nums, target)
-        return [left, right]
-    def getLeft(self, nums, target):
-        left = 0
-        right = len(nums)-1
-
         while left <= right:
-            mid = (left+right)//2 
-            if nums[mid] < target:
+            mid = (left+right)//2
+            if nums[mid] <= target:
                 left = mid + 1
-            elif nums[mid] >= target:
-                right = mid -1
-        if left >= len(nums) or nums[left] != target:
-            return -1
-        return left
+            else:
+                right = mid -1 
 
-    def getRight(self,nums, target):
-        left = 0
-        right = len(nums)-1
-        while left <= right: 
-            mid = (left+right)//2 
-            if nums[mid] < target:
-                left = mid + 1
-            elif nums[mid] == target:
-                left = mid + 1
-            if nums[mid] > target:
-                right = mid -1
-
-        if right < 0 or nums[right] != target:
-            return -1
-        return right
-
+        return right if right >= 0 and nums[right] == target else -1
 
