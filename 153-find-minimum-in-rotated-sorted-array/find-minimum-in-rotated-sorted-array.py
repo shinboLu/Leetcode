@@ -1,23 +1,23 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        if len(nums)==1:
+        if len(nums) == 1:
             return nums[0]
-        left, right = 0, len(nums)-1
+        left = 0 
+        right = len(nums)-1 
         if nums[right] > nums[0]:
             return nums[0]
 
         while left <= right:
-            middle = (left+right)//2
+            mid = (left+right)//2
 
-            if nums[middle] > nums[middle+1]:
-                return nums[middle+1]
+            if nums[mid] > nums[mid+1]:
+                return nums[mid+1]
             
-            if nums[middle-1] > nums[middle]:
-                return nums[middle]
-            
-            if nums[middle] > nums[left]:
-                left = middle + 1
+            if nums[mid-1] > nums[mid]:
+                return nums[mid] 
 
+            if nums[mid] > nums[left]:
+                left = mid + 1
+            
             else:
-                right = middle -1
-
+                right = mid -1
