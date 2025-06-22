@@ -6,23 +6,21 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        def dfs(root):
+        def postorder(root):
             if not root:
-                return True, 0 
-
-            left_balanced, left_height = dfs(root.left)
-            right_balanced, right_height = dfs(root.right) 
-
-            if not left_balanced:
-                return False, left_height+1
+                return True,0
             
-            if not right_balanced:
-                return False, right_height + 1
+            if not root.left and not root.right:
+                return True, 1
 
-            return (abs(left_height - right_height) <= 1), max(left_height,right_height) + 1
+            # if height_diff <= 1:
+            #     return True,height_diff
 
-        return dfs(root)[0]
-
-
-            
-
+            isLB, left_h = postorder(root.left)
+            isRB, right_h = postorder(root.right)
+            if isLB and isRB and abs(left_h - right_h) <= 1:
+                return True, max(left_h, right_h)+1
+            else:
+                return False, max(left_h, right_h)+1
+        isBalanced, height = postorder(root)
+        return isBalanced
