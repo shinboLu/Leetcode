@@ -6,21 +6,22 @@
 #         self.right = right
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
-        def post_order(root):
-
+        if not root:
+            return 0
+        global res
+        res =float('inf')
+        def traverse(root, depth):
             if not root:
-                return 0
-            if not root.left and not root.right:
-                return 1
+                return 
+            global res
+            if root:
+                if not root.left and not root.right:
+                    res = min(res, depth)
+            traverse(root.left, depth+1)
+            traverse(root.right, depth+1)
 
-            left_h = post_order(root.left)
-            right_h = post_order(root.right)
-            if left_h == 0:
-                return right_h+1
-            elif right_h ==0:
-                return left_h+1
-            else:
-                return min(left_h, right_h)+1
+        traverse(root, 1)
+        return res
 
-        return post_order(root)
+
 
