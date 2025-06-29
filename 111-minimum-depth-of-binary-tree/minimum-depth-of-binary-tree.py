@@ -7,21 +7,23 @@
 class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
-            return 0
-        global res
-        res =float('inf')
-        def traverse(root, depth):
-            if not root:
-                return 
-            global res
-            if root:
-                if not root.left and not root.right:
-                    res = min(res, depth)
-            traverse(root.left, depth+1)
-            traverse(root.right, depth+1)
+            return 0 
 
-        traverse(root, 1)
-        return res
+        queue = deque()
 
+        queue.append(root)
+        depth = 1
 
+        while queue:
+            for cur_lv in range(len(queue)):
+                cur = queue.popleft()
 
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+                
+                if not cur.left and not cur.right:
+                    return depth
+            depth+=1
+        
