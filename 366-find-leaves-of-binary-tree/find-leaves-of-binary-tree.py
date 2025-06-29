@@ -7,43 +7,34 @@
 class Solution:
     def findLeaves(self, root: Optional[TreeNode]) -> List[List[int]]:
         global res
-        global output
         res = [] 
-        output = []
 
-        def dfs_remove_node(node):
-    
+        def dfs_getLeaves_remove(node):
             if not node:
                 return None
-
+            
             if not node.left and not node.right:
                 res.append(node.val)
-                return None 
+                return None
             
-            left = dfs_remove_node(node.left)
-            right = dfs_remove_node(node.right)
-            if not left:
-                node.left = None 
-            if not right:
-                node.right = None 
+            left = dfs_getLeaves_remove(node.left)
+            if left is None:
+                node.left = None
+            right = dfs_getLeaves_remove(node.right)
+            if right is None:
+                node.right = None
+            
+            return node
 
-
-            return node 
-
+        output = []
         while root is not None:
             if not root.left and not root.right:
-                output.append([root.val])
+                res.append(root.val)
+                output.append(res)
                 break
             else:
-                # print(root)
-                dfs_remove_node(root)
+                dfs_getLeaves_remove(root)
                 output.append(res)
-                res = []
+            res = [] 
 
-
-            
-
-        return output 
-
-
-      
+        return output
