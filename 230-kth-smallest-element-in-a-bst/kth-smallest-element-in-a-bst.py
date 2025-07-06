@@ -6,19 +6,18 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root, k):
+        global res 
         res = []
-        def inorder(root):
-            if not root:
+
+        def dfs_return(node,k):
+            if not node:
                 return 
-            
-            inorder(root.left)
-            res.append(root.val)
-            inorder(root.right) 
-        
-        inorder(root)
+            global res
+            res.append(node.val)
+            dfs_return(node.left, k)
+            dfs_return(node.right, k)
+        dfs_return(root, k)
+        res = sorted(res)
+        print(res)
 
-        return res[k-1]
-        
-
-
-            
+        return res[k-1]            
