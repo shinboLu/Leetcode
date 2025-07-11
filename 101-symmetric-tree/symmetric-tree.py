@@ -8,19 +8,19 @@ class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if not root:
             return True
-        
-        def dfs_return_boolean(node1, node2):
-            if not node1 and not node2:
+        def dfs_return_bool(leftT, rightT):
+            if not leftT and not rightT:
                 return True
-            
-            if not node1 or not node2:
+
+            if not leftT or not rightT:
                 return False
 
-            if node1.val != node2.val:
+            if leftT.val != rightT.val:
                 return False
             
-            comp1 = dfs_return_boolean(node1.left, node2.right)
-            comp2 = dfs_return_boolean(node1.right, node2.left)
+            left = dfs_return_bool(leftT.left, rightT.right)
+            right = dfs_return_bool(leftT.right, rightT.left)
 
-            return comp1 and comp2 
-        return dfs_return_boolean(root.left, root.right)
+            return left and right
+
+        return dfs_return_bool(root.left, root.right)
