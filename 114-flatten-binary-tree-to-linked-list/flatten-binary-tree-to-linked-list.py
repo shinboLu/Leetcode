@@ -9,40 +9,20 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-
-        def dfs(node):
+        def update_root(node):
             if not node:
                 return 
-            
+
             if not node.left and not node.right:
-                return node
+                return node 
 
-            left_tail = dfs(node.left)
-            right_tail = dfs(node.right) 
+            left = update_root(node.left)
+            right = update_root(node.right)
 
-            if left_tail:
-                left_tail.right = node.right
+            if left:
+                left.right = node.right
                 node.right = node.left
                 node.left = None
-            return right_tail if right_tail else left_tail
+            return right if right else left
         
-        dfs(root)
-        
-        dfs(root)
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        update_root(root)
