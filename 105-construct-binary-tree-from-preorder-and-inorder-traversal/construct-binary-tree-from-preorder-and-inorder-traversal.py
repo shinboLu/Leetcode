@@ -5,24 +5,27 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
-        val_idx = {}
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        inorder_maping = {}
         for idx, val in enumerate(inorder):
-            val_idx[val] = idx 
-        root_idx = 0 
-        def dfs(left, right):
-            nonlocal root_idx 
+            inorder_maping[val] = idx
 
-            if left > right:
-                return 
+        self.root_idx = 0
 
-            root_val = preorder[root_idx]
+        def traverse_build(left_idx, right_idx):
+            if left_idx > right_idx:
+                return None
+            
+            root_val = preorder[self.root_idx]
             root = TreeNode(root_val)
 
-            root_idx += 1
+            self.root_idx+=1
 
-            root.left = dfs(left, val_idx[root_val]-1)
-            root.right = dfs(val_idx[root_val] +1, right)
-            return root 
+            root.left = traverse_build(left_idx, inorder_maping[root_val]-1)
+            root.right=traverse_build(inorder_maping[root_val]+1, right_idx)
+            return root
 
-        return dfs(0, len(inorder)-1)
+        return traverse_build(0, len(inorder)-1)
+
+
+            
