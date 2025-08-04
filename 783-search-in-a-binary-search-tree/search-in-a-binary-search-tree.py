@@ -4,29 +4,20 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-
-# return node which equals to the val
-# exit: not root, return None
-# 
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
 
-        def recursion(root):
-            if not root:
-                return
+        def traverse(node):
+            if not node:
+                return 
             
-            if root.val < val:
-                return recursion(root.right)
-            
-            elif root.val > val:
-                return recursion(root.left)
-            else:
-                return root
+            if node.val > val:
+                return traverse(node.left)
 
-        return recursion(root)
-
+            if node.val < val:
+                return traverse(node.right)
             
-
-            
+            return node
+        
+        return traverse(root)
 
