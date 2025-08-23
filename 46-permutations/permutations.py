@@ -1,21 +1,19 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        res = [] 
-        visited = [False] * len(nums)
-
-        def backtrack(combs):
-            if len(combs) == len(nums):
-                res.append(combs.copy())
-                return
-
+        self.res = [] 
+        self.visited = [False] * len(nums) 
+        def bt(nums,cur):
+            if len(cur) == len(nums):
+                self.res.append(cur.copy())
+                return 
             for i in range(len(nums)):
-                if visited[i]:
+                if self.visited[i]:
                     continue
-                visited[i] = True
-                combs.append(nums[i])
-                backtrack(combs)
-                combs.pop()
-                visited[i] = False
+                cur.append(nums[i])
+                self.visited[i] = True
+                bt(nums, cur)
+                cur.pop()
+                self.visited[i] = False
 
-        backtrack([])
-        return res
+        bt(nums, [])
+        return self.res
