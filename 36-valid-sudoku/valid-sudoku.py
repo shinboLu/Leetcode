@@ -1,19 +1,20 @@
-
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         row_counter = collections.defaultdict(list)
         col_counter = collections.defaultdict(list)
-        grid_counter = collections.defaultdict(lambda : collections.defaultdict(list))
+        matrix_counter = collections.defaultdict(lambda: collections.defaultdict(list))
 
-        for i in range(9):
-            for j in range(9):
-                cur_val = board[i][j]
+        for row in range(9):
+            for col in range(9):
+                cur_val = board[row][col]
 
                 if cur_val != '.':
-                    if cur_val in row_counter[i] or cur_val in col_counter[j] or cur_val in grid_counter[i//3%3][j//3%3]:
+                    if cur_val in row_counter[row] or cur_val in col_counter[col] or cur_val in matrix_counter[row//3%3][col//3%3]:
+                        print(row_counter, col_counter, matrix_counter)
                         return False
-
-                    row_counter[i].append(cur_val)
-                    col_counter[j].append(cur_val)
-                    grid_counter[i//3%3][j//3%3].append(cur_val)
+                
+                row_counter[row].append(cur_val)
+                col_counter[col].append(cur_val)
+                matrix_counter[row//3%3][col//3%3].append(cur_val)
+        
         return True
