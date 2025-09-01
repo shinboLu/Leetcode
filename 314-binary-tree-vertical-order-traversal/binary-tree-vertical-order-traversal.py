@@ -7,27 +7,28 @@
 class Solution:
     def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
-            return [] 
-
-        col_tbl_map = collections.defaultdict(list) 
-        start_col = 0 
+            return []
+        col_tbl_map = collections.defaultdict(list)
+        res = [] 
+        start_col = 0
         end_col = 0 
 
-        def dfs(node, r, c ):
-            nonlocal start_col, end_col, col_tbl_map
+        def dfs(node, r, c):
             if not node:
-                return
-
-            col_tbl_map[c].append((r,node.val))
+                return 
+            nonlocal start_col, end_col
+            col_tbl_map[c].append((node.val, r))
             start_col = min(start_col, c)
             end_col = max(end_col, c)
+            dfs(node.left, r+1, c-1)
+            dfs(node.right, r+1, c+1)
 
-            dfs(node.left, r + 1, c -1)
-            dfs(node.right, r + 1, c +1)
+            return 
+
         dfs(root, 0, 0)
-        res = [] 
+
         for col in range(start_col, end_col+1):
-            col_tbl_map[col].sort(key=lambda x: x[0])
-            col_val = [val for row, val in col_tbl_map[col]]
-            res.append(col_val)
-        return res 
+            col_tbl_map[col].sort(key = lambda x: x[1])
+            col_vals = [val for val, _ in col_tbl_map[col]]
+            res.append(col_vals)
+        return res
