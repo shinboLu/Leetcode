@@ -8,22 +8,18 @@
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         
-        def dfs_return_node(node):
+        def traverse(node):
             if not node:
                 return 
-
+            
             if node == p or node == q:
                 return node
+            
+            left_node = traverse(node.left)
+            right_node = traverse(node.right)
 
-            left_match = dfs_return_node(node.left)
-            right_match = dfs_return_node(node.right)
-
-            if left_match and right_match:
+            if left_node and right_node:
                 return node
             
-            return left_match if not right_match else right_match
-
-
-        return dfs_return_node(root)
-
-            
+            return left_node or right_node
+        return traverse(root)
