@@ -1,19 +1,26 @@
-from collections import deque
-
-
 class HitCounter:
 
     def __init__(self):
-        self.hit_dict = collections.defaultdict(int)
-        self.time_lim = 300 
-        
+        self.counter = collections.defaultdict(int)
     def hit(self, timestamp: int) -> None:
-            self.hit_dict[timestamp] +=1 
-
+        self.counter[timestamp] += 1
+    
     def getHits(self, timestamp: int) -> int:
-        hit_count = 0 
-        for k,v in self.hit_dict.items():
-            time_diff = timestamp - k
-            if time_diff < 300 and time_diff >= 0:
-                hit_count += v
-        return hit_count
+        res = 0
+        if timestamp > 300:
+            stop = timestamp - 300
+            for i in range(timestamp, stop , -1):
+                res += self.counter[i]
+        else:
+            for i in range(timestamp, -1, -1):
+                res += self.counter[i]
+        return res
+        
+
+        
+
+
+# Your HitCounter object will be instantiated and called as such:
+# obj = HitCounter()
+# obj.hit(timestamp)
+# param_2 = obj.getHits(timestamp)
