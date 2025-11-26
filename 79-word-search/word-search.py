@@ -1,32 +1,26 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
+        dirs = [[0,1], [1,0], [-1,0], [0, -1]]
         nrow = len(board)
         ncol = len(board[0])
-        dirs = [[0,1], [1,0], [-1, 0], [0, -1]]
-        combs = [board[0][0]]
+        visited = set()
 
-        def backtrack(row, col, remain_letter):
-            if len(remain_letter) == 0:
+        def dfs(x,y,cur_len):
+            if cur_len == len(word):
                 return True
-            
-            if not(0<=row<nrow) or not(0<=col<ncol) or board[row][col] != remain_letter[0]:
+            if x < 0 or x >= nrow or y < 0 or y >= ncol or board[x][y] != word[cur_len] or (x,y) in visited:
                 return False
 
-            res = False
-            temp = board[row][col]
-            board[row][col] = '#' 
-
-            for dx, dy in dirs:
-                res = backtrack(dx+row, dy+col, remain_letter[1:])
-                if res:
-                    break  
-
-            board[row][col] = temp 
-
-            return res
+            visited.add((x,y))
+            for nx, ny in dirs:
+                if dfs(x+nx, y +ny, cur_len+1):
+                    return True
+            visited.remove((x,y))
+            return False
 
         for i in range(nrow):
             for j in range(ncol):
-                if backtrack(i, j, word):
+                if dfs(i, j, 0):
                     return True
-        return False 
+        return False
+            
