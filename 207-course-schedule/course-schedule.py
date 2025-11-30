@@ -1,26 +1,29 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        indegree = [0] * numCourses
-        adj = [[] for i in range(numCourses)]
+        adj_list = collections.defaultdict(list)
 
-        for nodein, nodeout in prerequisites:
-            adj[nodeout].append(nodein)
-            indegree[nodein] += 1
+        for c,p_c in prerequisites:
+            adj_list[p_c].append(c)
 
-        queue = collections.deque()
+        visited = [False] * numCourses
+        in_stack = [False] * numCourses
+
+        def dfs(cur_c, visited, in_stack):
+            if in_stack[cur_c]:
+                return False
+
+            if visited[cur_c]:
+                return True
+            
+            in_stack[cur_c] = True
+            visited[cur_c] = True
+            for n_c in adj_list[cur_c]:
+                if not dfs(n_c, visited, in_stack):
+                    return False
+            in_stack[cur_c] = False
+            return True
 
         for i in range(numCourses):
-            if indegree[i] == 0:
-                queue.append(i)
-
-        visited = 0
-        while queue:
-            cur_class = queue.popleft()
-            visited += 1
-
-            for nei in adj[cur_class]:
-                indegree[nei] -= 1
-                if indegree[nei] == 0:
-                    queue.append(nei) 
-
-        return visited == numCourses
+            if not dfs(i, visited, in_stack):
+                return False
+        return True
