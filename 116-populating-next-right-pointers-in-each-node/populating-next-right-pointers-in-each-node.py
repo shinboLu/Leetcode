@@ -10,16 +10,17 @@ class Node:
 
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        if not root:
-            return
-        def traverse(l_node, r_node):
-            if not l_node and not r_node:
-                return
+        def dfs(node):
+            if not node:
+                return node
+            if node.left:
+                node.left.next = node.right
+                if node.next:
+                    node.right.next = node.next.left
             
-            l_node.next = r_node
+            dfs(node.left)
+            dfs(node.right)
 
-            traverse(l_node.left, l_node.right) 
-            traverse(r_node.left, r_node.right)
-            traverse(l_node.right, r_node.left)
-        traverse(root.left, root.right)
-        return root
+            return node
+
+        return dfs(root)
