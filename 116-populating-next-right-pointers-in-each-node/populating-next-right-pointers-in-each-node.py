@@ -13,14 +13,15 @@ class Solution:
         def dfs(node):
             if not node:
                 return node
+
             if node.left:
                 node.left.next = node.right
                 if node.next:
                     node.right.next = node.next.left
-            
-            dfs(node.left)
+            dfs(node.left) 
             dfs(node.right)
 
-            return node
+        dfs(root)
+        return root
 
-        return dfs(root)
+                
