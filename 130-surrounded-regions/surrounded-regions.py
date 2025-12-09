@@ -3,45 +3,28 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        dirs = [[1, 0], [0,1], [-1, 0], [0, -1]]
+        dirs = [[0,1], [1,0], [-1,0], [0,-1]]
         nrow = len(board)
-        ncol = len(board[0])
-        visited = set() 
-        queue = collections.deque()
+        ncol = len(board[0]) 
 
-        for i in range(nrow):
-            for j in range(ncol):
-                if board[i][j] == 'O' and (i == 0 or j== 0 or i == nrow-1 or j == ncol-1):
-                    queue.append((i, j))
 
-        def getNeigh(x ,y):
-            nei = [] 
-            for dx, dy in dirs: 
-                nx, ny = dx + x, dy + y
-                if 0 <= nx < nrow and 0 <= ny < ncol:
-                    nei.append((nx, ny))
-
-            return nei 
-
-        while queue:
-            cur_x, cur_y = queue.popleft()
-            board[cur_x][cur_y] = 'R'
-            for nx, ny in getNeigh(cur_x, cur_y):
-                if board[nx][ny] == 'O':
-                    queue.append((nx, ny))
+        def dfs(x, y):
+            if x < 0 or x >= nrow or y < 0 or y >= ncol or board[x][y] != 'O':
+                return 
+            board[x][y] = 'T'
+            for dx, dy in dirs:
+                dfs(dx+x, dy+y)
         
-        
-        for i in range(nrow):
-            for j in range(ncol):
-                if board[i][j] == 'R':
-                    board[i][j] = 'O'
-                elif board[i][j] == 'O':
-                    board[i][j] = 'X'
-         
+        for x in range(nrow):
+            for y in [0, ncol-1]:
+                dfs(x, y)
+        for x in range(ncol):
+            for y in [0, nrow-1]:
+                dfs(y, x)
 
-
-
-
-                
-
-        
+        for x in range(nrow):
+            for y in range(ncol):
+                if board[x][y] == 'O':
+                    board[x][y] = 'X'
+                elif board[x][y] == 'T':
+                    board[x][y] = 'O'
