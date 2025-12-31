@@ -1,16 +1,17 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        sorted_strs = []
+
+        for s in strs:
+            sorted_strs.append(''.join(sorted(s)))
         mapping = collections.defaultdict(list)
+
+        for i in range(len(sorted_strs)):
+            mapping[sorted_strs[i]].append(strs[i])
         res = []
-        for val in strs:
-            sorted_val = ''.join(sorted(val))
+        for k, v in mapping.items():
+            res.append(v)
 
-            if sorted_val not in mapping.keys():
-                mapping[sorted_val] = []
-            mapping[sorted_val].append(val)
-
-        for k in mapping:
-            res.append(mapping[k])
-        
         return res
 
+                
