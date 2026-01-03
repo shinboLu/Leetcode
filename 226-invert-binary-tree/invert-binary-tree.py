@@ -13,11 +13,12 @@ class Solution:
             if not node.left and not node.right:
                 return node
             
-            left = dfs(node.left)
+            left = dfs(node.left) 
             right = dfs(node.right)
 
-            node.left, node.right = node.right, node.left
-
+            node.right, node.left = node.left, node.right
             return node
-
+            
         return dfs(root)
+
+
