@@ -4,24 +4,23 @@ class Solution:
         Do not return anything, modify rooms in-place instead.
         """
         dirs = [[0,1], [1,0], [-1,0], [0, -1]]
-        INF = 2147483647 
-        nrow = len(rooms)
+        INF = 2147483647
+        nrow = len(rooms) 
         ncol = len(rooms[0])
-        visited = set()
-        queue = collections.deque()
+        def dfs(x, y, distance):
+            if x < 0 or x >= nrow or y < 0 or y >= ncol or rooms[x][y] == -1:
+                return 
+
+            if distance > 0 and rooms[x][y] <= distance:
+                return 
+            rooms[x][y] = distance
+
+            for dx, dy in dirs:
+                nx, ny = dx+x, dy+y
+                dfs(nx, ny, distance+1)
+
         for row in range(nrow):
             for col in range(ncol):
                 if rooms[row][col] == 0:
-                    queue.append((row, col)) 
-
-        def bfs(queue):
-            while queue:
-                cx, cy = queue.popleft()
-                for dx, dy in dirs:
-                    nx, ny = cx+dx, cy+dy
-                    if 0<=nx<nrow and 0<=ny<ncol and (nx, ny) not in visited:
-                        if rooms[nx][ny] == INF:
-                            rooms[nx][ny] = rooms[cx][cy]+1
-                            visited.add((nx, ny))
-                            queue.append((nx, ny))
-        bfs(queue)
+                    dfs(row, col, 0)
+            
