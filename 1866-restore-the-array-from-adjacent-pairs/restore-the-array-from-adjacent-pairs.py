@@ -1,30 +1,30 @@
 class Solution:
     def restoreArray(self, adjacentPairs: List[List[int]]) -> List[int]:
-        adj_list = collections.defaultdict(list)
-        for i, j in adjacentPairs:
-            adj_list[i].append(j)
-            adj_list[j].append(i)
-
+        adjacentPairs.sort(key=lambda x:x[0])
         res = []
-        visited = set() 
+        adj_list = collections.defaultdict(list) 
+        visited = set()
+        for u, v in adjacentPairs:
+            adj_list[u].append(v)   
+            adj_list[v].append(u)
 
-        def dfs(node):
-            nonlocal res
-            
-            res.append(node)
-            visited.add(node)
-            for nei in adj_list[node]:
-                if nei not in visited:
-                    dfs(nei)
-            return 
+        print(adj_list)
 
-        root = None
-        for num in adj_list:
+        def dfs(num):
+            nonlocal res, visited
+
+            visited.add(num) 
+            res.append(num)
+
+            for val in adj_list[num]:
+                if val not in visited:
+                    dfs(val)
+        start = None
+        for num in adj_list.keys():
             if len(adj_list[num]) == 1:
-                root = num
+                start = num
                 break
-        dfs(root)
+        print(start)
+        dfs(start)
         return res
-
-
 
