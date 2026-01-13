@@ -1,23 +1,23 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
-        size = n * 2
+        def bt(left, right, combs):
+            if len(combs) == n*2:
+                res.append(''.join(combs.copy()))
+                return 
 
-        def backtrack(left, right, combs):
-            if left == right == n:
-                res.append(''.join(combs))
-                return
-            
             if left < n:
                 combs.append('(')
-                backtrack(left+1, right, combs)
+                bt(left+1, right, combs)
                 combs.pop()
-
+                
             if right < left:
                 combs.append(')')
-                backtrack(left, right +1, combs)
+                bt(left, right+1, combs)
                 combs.pop()
 
-        backtrack(0, 0, [])
+        bt(0,0,[])
+        return res
 
-        return res 
+            
+
