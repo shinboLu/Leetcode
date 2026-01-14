@@ -1,46 +1,51 @@
 class Solution:
     def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
-        def check(subgrid, row, col):
-            visited = [False] * 10
+        
+        def check(row, col):
+            ## check row
 
+            row1 = grid[row][col] + grid[row][col+1] + grid[row][col+2]
+            row2 = grid[row+1][col] + grid[row+1][col+1] + grid[row+1][col+2]
+            row3 = grid[row+2][col] + grid[row+2][col+1] + grid[row+2][col+2]
+
+            if not (row1 == row2 == row3):
+                return False
+
+            col1 = grid[row][col] + grid[row+1][col] + grid[row+2][col]
+            col2 = grid[row][col+1] + grid[row+1][col+1] + grid[row+2][col+1]
+            col3 = grid[row][col+2] + grid[row+1][col+2] + grid[row+2][col+2]
+
+            if not (col1 == col2 == col3 == row1):
+                return False
+            visited = set()
             for i in range(3):
                 for j in range(3):
-                    num = subgrid[i+row][j+col]
-                    if num<1 or num>9:
+                    if grid[row+i][col+j] > 9 or grid[row+i][col+j] < 1:
                         return False
-                    if visited[num]:
+                    if grid[row+i][col+j] in visited:
                         return False
-                    visited[num] = True
-            
-            row1 = subgrid[row][col] + subgrid[row][col+1] + subgrid[row][col+2]
-            row2 = subgrid[row+1][col] + subgrid[row+1][col+1] + subgrid[row+1][col+2]
-            row3= subgrid[row+2][col] + subgrid[row+2][col+1] + subgrid[row+2][col+2]
+                    visited.add(grid[row+i][col+j])
+            diagonal1 = grid[row][col] + grid[row+1][col+1] + grid[row+2][col+2] 
+            diagonal2 = grid[row][col+2] + grid[row+1][col+1] + grid[row+2][col] 
 
-            if row1 != row2 != row3:
-                return False
-            
-            col1 = subgrid[row][col] + subgrid[row+1][col] + subgrid[row+2][col]
-            col2 = subgrid[row][col+1] + subgrid[row+1][col+1] + subgrid[row+2][col+1]
-            col3 = subgrid[row][col+2] + subgrid[row+1][col+2] + subgrid[row+2][col+2]
-
-            if col1 != col2 != col3:
-                return False
-
-            d1 = subgrid[row][col] + subgrid[row+1][col+1] + subgrid[row+2][col+2]
-            d2 = subgrid[row][col+2] + subgrid[row+1][col+1] + subgrid[row+2][col]
-            if d1!=d2:
+            if not (diagonal1 == diagonal2 == row1):
                 return False
             return True
+        
         nrow = len(grid)
         ncol = len(grid[0])
         res = 0
-        for i in range(nrow-2):
-            for j in range(ncol-2):
-                if check(grid, i, j ):
-                    res+=1
+        for row in range(nrow-2):
+            for col in range(ncol-2):
+                if check(row, col):
+                    res +=1
 
         return res
 
+
+
+
                 
-                
+
+
             
