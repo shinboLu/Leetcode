@@ -4,36 +4,24 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-'''
-updating the maxSum while counting level till the last level
-'''
 class Solution:
     def maxLevelSum(self, root: Optional[TreeNode]) -> int:
-        queue = collections.deque() 
-        queue.append(root)
-        level_sum = []
-        level = 0
+        queue = collections.deque()
+        queue.append([root, 1])
+        maxi = float('-inf')
+        res = 1
 
         while queue:
             n = len(queue)
-            cur_sum = 0
-
+            level_sum = 0
             for _ in range(n):
-                cur_node = queue.popleft()
-                cur_sum += cur_node.val 
-
+                cur_node, level = queue.popleft()
+                level_sum += cur_node.val
                 if cur_node.left:
-                    queue.append(cur_node.left)
-
+                    queue.append([cur_node.left, level+1]) 
                 if cur_node.right:
-                    queue.append(cur_node.right)
-            
-            level+=1
-
-            level_sum.append([cur_sum, level])
-
-        level_sum.sort(key=lambda x: -x[0])
-        return level_sum[0][1]
-
-
+                    queue.append([cur_node.right, level+1])
+            if level_sum > maxi:
+                res = max(res, level)
+                maxi = level_sum
+        return res
