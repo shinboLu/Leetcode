@@ -1,16 +1,21 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if len(s) == 0:
-            return 0
+        mapping = collections.defaultdict(int)
         left = 0 
-        right = 0 
-        res = float('-inf')
+        right = 0
+        maxi = 0 
+
+        
         while right < len(s):
-            cur_str = s[left:right+1]
-            if len(set(cur_str)) == len(cur_str):
-                res = max(len(cur_str), res)
+            cur = s[left:right+1]
+            set_cur = set(cur)
+            if len(cur) == len(set_cur):
                 right += 1
+                maxi  = max(maxi, right-left)
             else:
-                left+=1
-        return res
+                while right < len(s) and left <=right and len(cur) > len(set_cur):
+                    left += 1
+                    cur = s[left:right+1]
+                    set_cur = set(cur)
+        return maxi
             
