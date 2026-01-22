@@ -36,30 +36,27 @@ class Solution:
         :type robot: Robot
         :rtype: None
         """
+        dirs = [[0,1], [1, 0], [0, -1], [-1, 0]]
         visited = set()
-        DIR = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-        def goBack():
+
+        def go_back():
             robot.turnRight()
             robot.turnRight()
             robot.move()
             robot.turnRight()
             robot.turnRight()
 
-        def backtracking(cell, direction):
-            visited.add(cell)
+        def bt(x, y, cur_dir_idx):
             robot.clean()
+            visited.add((x,y))
 
-            for i in range(4):
-                new_direction = (direction+i) % 4
-                new_cell = (cell[0] + DIR[new_direction][0], cell[1] + DIR[new_direction][1])
+            for i in range(4): 
+                next_dir_idx = (cur_dir_idx + i) % 4
+                dx, dy = dirs[next_dir_idx]
+                nx, ny = x+dx, y+dy
 
-                if new_cell not in visited and robot.move():
-                    backtracking(new_cell, new_direction)
-                    goBack()
-                robot.turnRight()
-
-        backtracking((0,0), 0)
-
-
-
-        
+                if (nx, ny) not in visited and robot.move():
+                    bt(nx, ny, next_dir_idx)
+                    go_back()
+                robot.turnLeft()
+        bt(0, 0, 0)
