@@ -10,19 +10,17 @@ class Solution:
             '8': 'tuv',
             '9':'wxyz'
         }
+        res= []
+        def bt(idx, comb):
+            nonlocal res, mapping 
+            if len(comb) == len(digits):
+                res.append(''.join(comb.copy()))
+                return
 
-        res = [] 
-
-        def bt(idx, combs):
-            nonlocal res
-            if idx == len(digits):
-                res.append(''.join(combs.copy()))
-                return 
-
-            for char in mapping[digits[idx]]:
-                combs.append(char)
-                bt(idx+1, combs)
-                combs.pop()
+            for num in mapping[digits[idx]]:
+                comb.append(num) 
+                bt(idx+1, comb)
+                comb.pop()
 
         bt(0, [])
         return res
