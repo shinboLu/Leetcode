@@ -1,36 +1,33 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        res = [] 
+        nrow = len(matrix)
+        ncol = len(matrix[0])
+        res = []
+        left = 0 
+        right = ncol-1
 
-        m, n = len(matrix), len(matrix[0])
-        upper_bound, lower_bound = 0, m-1
-        left_bound, right_bound = 0, n-1
+        up = 0 
+        down = nrow-1
 
-        # m=3, upper_bound = 0, lower_bound = 2
-        # n = 4, left_bound = 0, right_bound = 3
+        while len(res) < nrow * ncol:
+            for col in range(left, right+1):
+                res.append(matrix[left][col])
 
-        while len(res) < m*n:
-            if upper_bound <= lower_bound:
-                for i in range(left_bound, right_bound+1):
-                    res.append(matrix[upper_bound][i]) 
-                upper_bound+=1
+            for row in range(up+1, down+1):
+                res.append(matrix[row][right])
+
             
-            if left_bound <= right_bound:
-                for i in range(upper_bound, lower_bound+1):
-                    res.append(matrix[i][right_bound])
-                right_bound -=1 
+            if up != down:
+                for col in range(right-1, left-1, -1):
+                    res.append(matrix[down][col])
 
-            if upper_bound <= lower_bound:
-                for i in range(right_bound, left_bound-1, -1):
-                    res.append(matrix[lower_bound][i]) 
-                lower_bound -=1 
-            
-            if left_bound <= right_bound:
-                for i in range(lower_bound, upper_bound-1, -1):
-                    res.append(matrix[i][left_bound])
-                left_bound+=1
-        
+            if left != right:
+                for row in range(down-1, up, -1):
+                    res.append(matrix[row][left]) 
+
+            left +=1 
+            right-=1
+            up+=1
+            down-=1
+
         return res
-            
-
-
