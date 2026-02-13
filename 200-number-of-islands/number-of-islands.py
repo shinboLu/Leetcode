@@ -6,15 +6,17 @@ class Solution:
         visited = set()
 
         def dfs(x, y):
-            visited.add((x,y))
+            if x < 0 or x >= nrow or y < 0 or y >= ncol or (x, y) in visited or grid[x][y] == '0':
+                return 
+            visited.add((x, y))
             for dx, dy in dirs:
-                nx, ny = dx+x, dy+y
-                if 0<=nx<nrow and 0<=ny<ncol and grid[nx][ny] == "1" and (nx,ny) not in visited:
-                    dfs(nx, ny) 
+                nx, ny = dx+x, dy +y 
+                dfs(nx, ny) 
         res = 0
         for row in range(nrow):
             for col in range(ncol):
-                if (row, col) not in visited and grid[row][col] == '1':
-                    dfs(row, col)
-                    res+=1
+                if grid[row][col] == '1' and (row, col) not in visited:
+                    dfs(row, col) 
+                    res +=1 
         return res
+
