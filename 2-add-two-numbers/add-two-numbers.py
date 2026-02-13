@@ -5,27 +5,21 @@
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        l1_cur = l1
-        l2_cur = l2
-        carry = 0
         res = ListNode(-1)
-        res_p = res
+        p_res = res
 
-        while l1_cur or l2_cur or carry:
-            l1_cur_val = l1_cur.val if l1_cur else 0 
-            l2_cur_val = l2_cur.val if l2_cur else 0 
+        carry = 0 
 
-            cur_sum = l1_cur_val + l2_cur_val + carry 
-
+        while l1 or l2 or carry:
+            l1_val = l1.val if l1 else 0 
+            l2_val = l2.val if l2 else 0 
+            cur_sum = l1_val + l2_val + carry
             carry = cur_sum // 10 
+            
+            p_res.next = ListNode(cur_sum%10)
+            p_res = p_res.next
 
-            res_p.next = ListNode(cur_sum % 10)
-            res_p = res_p.next
-
-            l1_cur = l1_cur.next if l1_cur else None
-            l2_cur = l2_cur.next if l2_cur else None
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
         
         return res.next
-            
-
-            
