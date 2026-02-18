@@ -8,37 +8,28 @@ class Node:
 """
 
 class Solution:
-    def __init__(self):
-        self.visited = {}
-
-    def getClonedNode(self, node):
-        if node:
-            if node in self.visited:
-                return self.visited[node]
-            else:
-                self.visited[node] = Node(node.val,None, None) 
-                return self.visited[node]
-        return None
-
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if not head:
-            return 
+        dummy = head
+        res = Node(-1)
+        cur = res
 
-        cur = head  
+        mapping = {}
 
-        new_node = Node(cur.val, None, None)
-        self.visited[cur] = new_node 
+        while dummy:
+            new_node = Node(dummy.val)
+            mapping[dummy] = new_node
+            cur.next = new_node
+            cur = cur.next
+            dummy = dummy.next
 
-        while cur:
-            new_node.next = self.getClonedNode(cur.next)
-            new_node.random = self.getClonedNode(cur.random) 
-
+        dummy = head
+        cur = res.next
+        while dummy:
+            if dummy.random:
+                cur.random = mapping[dummy.random]
+            else:
+                cur.random = None
+            dummy = dummy.next
             cur = cur.next 
-            new_node = new_node.next 
 
-        return self.visited[head]
-
-
-        
-
-        
+        return res.next
