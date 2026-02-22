@@ -1,7 +1,5 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        if not prerequisites:
-            return [x for x in range(numCourses)]
         adj_list = collections.defaultdict(list)
         indegree = [0] * numCourses 
 
