@@ -1,20 +1,30 @@
-from heapq import heapify, heappop, heappush
+from heapq import heappush, heappop
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
         counter = collections.Counter(tasks)
-        maxHeap = [-cnt for cnt in counter.values()]
-        heapify(maxHeap)
-        queue = collections.deque()
+        hq = []
+        for task, counts in counter.items():
+            heappush(hq, [-counts, task])
         time = 0
+        while hq:
+            temp = []
+            cycle = 0
+            for i in range(n+1): 
+                if hq:
+                    cnt, task = heappop(hq)
+                    cnt+=1
+                    cycle+=1
+                    if cnt < 0:
+                        temp.append([cnt, task])
+                else:
+                    break
+            for item in temp:
+                heappush(hq, item)
 
-        while maxHeap or queue:
-            time += 1
-            if maxHeap:
-                cur_cnt = 1 + heappop(maxHeap)
+            
+            if hq:
+                time += n+1
+            else:
+                time+= cycle
+        return time
 
-                if cur_cnt:
-                    queue.append([cur_cnt, time+n])
-            if queue and queue[0][1] == time: #check the idle time
-                heappush(maxHeap, queue.popleft()[0])
-
-        return time 
