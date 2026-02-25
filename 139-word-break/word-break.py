@@ -1,19 +1,19 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * len(s)
-
-        for i in range(len(s)):
-            for word in wordDict:
-                if i < len(word) -1:
+        
+        queue = collections.deque()
+        queue.append(0)
+        visited = set()
+        while queue:
+            cur_idx = queue.popleft()
+            if cur_idx == len(s):
+                return True
+            for i in range(cur_idx+1, len(s)+1):
+                if i in visited:
                     continue
-                if i == len(word)-1 or dp[i-len(word)]:
-                    if s[i-len(word) +1 : i+1] == word:
-                        dp[i] = True 
-                        break  
-
-        return dp[-1]               
+                if s[cur_idx:i] in wordDict:
+                    visited.add(i)
+                    queue.append(i)
 
 
-                
-
-
+        return False
