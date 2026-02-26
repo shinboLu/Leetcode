@@ -20,12 +20,11 @@ class Solution:
                 right = mid
             else:
                 left = mid + 1 
-        print(left)
-        print(right)
-        if right < 0:
-            return  nums[left]
-        if left == len(nums):
-            return nums[right]
+   
+        # if right < 0:
+        #     return  nums[left]
+        # if left == len(nums):
+        #     return nums[right]
 
         if nums[left] > nums[right]:
             return left 
