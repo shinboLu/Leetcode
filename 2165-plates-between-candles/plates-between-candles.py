@@ -1,13 +1,36 @@
 class Solution:
     def platesBetweenCandles(self, s: str, queries: List[List[int]]) -> List[int]:
-        psum, next, prev = [0] * (len(s) + 1), [float("inf")] * (len(s) + 1), [0] * (len(s) + 1)
-        res = []
+        candles = []
+        plates = [0] * len(s)
+        count = 0
         for i, ch in enumerate(s):
-            psum[i + 1] = psum[i] + (ch == '|')
-            prev[i + 1] = i if ch == '|' else prev[i]
-        for i, ch in reversed(list(enumerate(s))):
-            next[i] = i if ch == '|' else next[i + 1]
-        for q in queries:
-            l, r = next[q[0]], prev[q[1] + 1]
-            res.append(r - l - (psum[r] - psum[l]) if l < r else 0)
+            if ch == '*':
+                count += 1
+            plates[i] = count
+
+        for i in range(len(s)):
+            if s[i] == '|':
+                candles.append(i)
+        
+        def binary_search(left, right):
+            left_b = bisect.bisect_left(candles, left)
+            right_b = bisect.bisect_right(candles, right)-1
+            return [left_b, right_b]
+
+        res = []
+        for start, end in queries:
+            cur_left, cur_right = binary_search(start, end)
+
+            if cur_left == len(candles) or cur_right < 0 or cur_left > cur_right:
+                res.append(0)
+                continue
+
+            left_candle = candles[cur_left]
+            right_candle = candles[cur_right]
+
+            if left_candle >= right_candle:
+                res.append(0)
+            else:
+                res.append(plates[right_candle] - plates[left_candle])
+
         return res
