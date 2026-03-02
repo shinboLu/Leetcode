@@ -1,7 +1,8 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        n = len(nums)
-
+        nums.sort()
+        n = len(nums) 
         for i in range(n+1):
-            if i not in nums:
+            left = bisect.bisect_left(nums, i)
+            if left == n or nums[left] != i:
                 return i
