@@ -13,7 +13,7 @@ class Solution:
         right = len(self.prefix_w)-1 
         while left <= right:
             mid = (left+right)//2 
-            if self.prefix_w[mid] > target:
+            if self.prefix_w[mid] >= target:
                 right = mid -1
             else:
                 left = mid + 1
