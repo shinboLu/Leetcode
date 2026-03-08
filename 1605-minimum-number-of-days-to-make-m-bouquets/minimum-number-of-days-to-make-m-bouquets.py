@@ -1,30 +1,33 @@
 class Solution:
     def minDays(self, bloomDay: List[int], m: int, k: int) -> int:
-
-        def get_num_of_bouqeuts(mid, k):
-            num_of_bouquets = 0
-            count = 0 
-
-            for day in bloomDay:
-                if day <= mid:
-                    count+=1
-                else:
-                    count = 0
-                if count ==k:
-                    num_of_bouquets +=1
-                    count = 0 
-            return num_of_bouquets
-
-        left = 0
+        left = 0 
         right = max(bloomDay)
-        min_days = -1
+
+        def check(mid):
+            bouquets = 0 
+            cur_flower = 0 
+            for i in range(len(bloomDay)):
+                if bloomDay[i] <= mid:
+                    cur_flower += 1
+                else:
+                    cur_flower = 0 
+                if cur_flower == k:
+                    bouquets +=1
+                    cur_flower = 0
+            return bouquets
+        res = -1
         while left <= right:
-            mid = (left+right)//2
-            if get_num_of_bouqeuts(mid, k) >= m:
-                min_days = mid
-                right = mid-1 
+            mid = (left+right)//2 
+            if check(mid) >= m:
+                res = mid
+                right = mid -1
             else:
-                left = mid+1 
-        return min_days
-            
+                left = mid + 1
+        return res
+
+
+
+
+
+
 
