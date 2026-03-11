@@ -1,14 +1,15 @@
 class Solution:
     def minimumPushes(self, word: str) -> int:
-        freq = [0] * 26
+        freq = [0] * 26 
+        for i in range(len(word)):
+            idx = ord(word[i]) - ord('a')
+            freq[idx] +=1
 
-        for char in word:
-            freq[ord(char) - ord('a')] +=1 
-        
         freq.sort(reverse=True) 
+        print(freq)
         res = 0
-        for i in range(26):
-            if freq[i] == 0:
+        for idx, val in enumerate(freq):
+            if val == 0:
                 break
-            res += freq[i] * (i//8+1)
+            res += (idx//8+1) * val
         return res
