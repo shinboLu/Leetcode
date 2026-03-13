@@ -1,7 +1,6 @@
 class Solution:
     def minimumCost(self, nums: List[int]) -> int:
-        start = nums[0]
-
-        _next = sorted(nums[1:])
-
-        return start + sum(_next[:2])
+        cur_cost = nums[0]
+        
+        cur_cost += sum(sorted(nums[1:])[:2])
+        return cur_cost
