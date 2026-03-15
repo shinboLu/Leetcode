@@ -1,21 +1,13 @@
 class Solution:
     def reverse(self, x: int) -> int:
-        _range = range(-2**31, 2**31-1)
-        is_neg = False
-        res = 0
-        if x < 0:
-            is_neg = True
+        neg = False if x >= 0 else True
 
-        x = abs(x)
-
-        while x != 0:
-            digit = x % 10
-            x = x //10 
-            res = res * 10 + digit
-
-        if is_neg and res in _range: 
-            return -res
-        elif not is_neg and res in _range:
-            return res
+        x = str(abs(x))
+        x = x[::-1]
+        if neg:
+            res = -int(''.join(x)) 
         else:
-            return 0
+            res= int(''.join(x)) 
+        
+        return res if res in range(-2**31, 2**31-1) else 0
+
