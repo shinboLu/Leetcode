@@ -3,23 +3,21 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        
+        pivot = -1
 
-        pivot = 0 
-        n = len(nums)
-
-        for i in range(n-1, 0, -1):
-            if nums[i-1] < nums[i]:
-                pivot = i
+        for i in range(len(nums)-1, 0, -1):
+            if nums[i] > nums[i-1]:
+                pivot = i-1
                 break
 
-        if pivot == 0:
+        if pivot == -1:
             nums.sort()
             return
 
-        swap = n-1
-        while nums[pivot-1] >= nums[swap]:
-            swap -=1
+        swap = len(nums)-1
         
-        nums[swap], nums[pivot-1] = nums[pivot-1], nums[swap] 
-
-        nums[pivot:] = reversed(nums[pivot:])
+        while nums[pivot] >= nums[swap]:
+            swap-=1
+        nums[swap], nums[pivot] = nums[pivot], nums[swap]
+        nums[pivot+1:] = reversed(nums[pivot+1:])
