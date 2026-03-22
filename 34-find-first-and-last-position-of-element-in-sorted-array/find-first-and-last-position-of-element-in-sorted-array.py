@@ -1,27 +1,27 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        def get_left(left, right):
+        if not nums:
+            return [-1, -1]
+        def get_first(left, right): 
             while left <= right:
-                mid = (left+right)//2
+                mid = (left+right) //2
                 if nums[mid] < target:
-                    left = mid+1
+                    left = mid +1 
                 else:
                     right = mid -1
             return left
-
-        def get_right(left, right):
-            while left <= right:
-                mid = (left+right)//2  
-                if nums[mid] <= target:
-                    left = mid + 1
+        def get_last(left, right):
+            while left <= right: 
+                mid = (left+right)//2
+                if nums[mid] > target:
+                    right = mid -1 
                 else:
-                    right = mid -1
+                    left = mid +1 
             return right
-
-        left = get_left(0, len(nums)-1)
-        right = get_right(0, len(nums)-1)
-
-        if left == len(nums) or nums[left] != target:
+        
+        first = get_first(0, len(nums)-1)
+        last = get_last(0, len(nums)-1)
+        # print(first, last)
+        if first > last or first == len(nums) or nums[first] != target:
             return [-1, -1]
-
-        return [left, right]
+        return [first, last]
