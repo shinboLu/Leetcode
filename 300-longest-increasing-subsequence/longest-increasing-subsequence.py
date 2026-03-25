@@ -9,4 +9,3 @@ class Solution:
                 res[left] = num
 
         return len(res)
-
