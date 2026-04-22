@@ -4,10 +4,10 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         n = len(nums)
-        steps = n - (k % n)
-        # steps = k % n
+        # steps = n - (k % n)
+        steps = k % n
         print(steps)
         while steps > 0:
-            first = nums.pop(0)
-            nums.append(first)
+            first = nums.pop(-1)
+            nums.insert(0, first)
             steps -=1
