@@ -3,9 +3,11 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-
-        for i in range(k):
-            el = nums.pop()
-            nums.insert(0, el) 
-
-        
+        n = len(nums)
+        steps = n - (k % n)
+        # steps = k % n
+        print(steps)
+        while steps > 0:
+            first = nums.pop(0)
+            nums.append(first)
+            steps -=1
