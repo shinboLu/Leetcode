@@ -1,20 +1,17 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        i, count = 0, 1
+        i = 0 
+        res = 0 
+        while i < len(chars): 
+            group_len = 1
+            while i+group_len < len(chars) and chars[i+group_len] == chars[i]:
+                group_len +=1
+            chars[res] = chars[i] 
+            res +=1
 
-        for j in range(1, len(chars)+1):
-            if j < len(chars) and chars[j] == chars[j-1]:
-                count += 1
-            else: 
-                chars[i] = chars[j-1]
-                i += 1
-                if count > 1:
-                    for m in str(count):
-                        chars[i] = m
-                        i+=1
-                count = 1
-        return i
-
-
-
-        
+            if group_len > 1: 
+                str_repr = str(group_len)
+                chars[res:res+len(str_repr)] = list(str_repr)
+                res += len(str_repr) 
+            i+=group_len
+        return res
