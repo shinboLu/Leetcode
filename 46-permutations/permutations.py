@@ -1,19 +1,24 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        self.res = [] 
-        self.visited = [False] * len(nums) 
-        def bt(nums,cur):
-            if len(cur) == len(nums):
-                self.res.append(cur.copy())
-                return 
-            for i in range(len(nums)):
-                if self.visited[i]:
-                    continue
-                cur.append(nums[i])
-                self.visited[i] = True
-                bt(nums, cur)
-                cur.pop()
-                self.visited[i] = False
+        res = [] 
+        n = len(nums)
+        visited = [False] * n
 
-        bt(nums, [])
-        return self.res
+        def dfs(idx, combs):
+            if len(combs) == n:
+                res.append(combs.copy())
+                return 
+            
+            if len(combs) > n:
+                return 
+            
+            for i in range(n):
+                if not visited[i]:
+                    combs.append(nums[i])
+                    visited[i]=True
+                    dfs(i, combs) 
+                    combs.pop()
+                    visited[i]= False
+
+        dfs(0, [])
+        return res
