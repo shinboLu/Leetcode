@@ -1,21 +1,27 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
-        num_map = {
-            1: "I",
-            5: "V",    4: "IV",
-            10: "X",   9: "IX",
-            50: "L",   40: "XL",
-            100: "C",  90: "XC",
-            500: "D",  400: "CD",
-            1000: "M", 900: "CM",
-        }
+        pairs = [
+            [1000, 'M'],
+            [900, 'CM'],
+            [500, 'D'],
+            [400, 'CD'],
+            [100, 'C'],
+            [90, 'XC'],
+            [50, 'L'], 
+            [40, 'XL'],
+            [10, 'X'],
+            [9, 'IX'],
+            [5, 'V'],
+            [4, 'IV'],
+            [1, 'I']
+        ]
 
-        values = sorted(list(num_map.keys()), reverse=True)
+        res = []
 
-        res = ''
-
-        for val in values:
-            while val <= num:
-                res += num_map[val]
-                num -= val
-        return res
+        for val, symbol in pairs: 
+            if num == 0:
+                break
+            count, remain = divmod(num, val)
+            num = remain
+            res.append(count * symbol)
+        return ''.join(res)
