@@ -1,22 +1,26 @@
 class TimeMap:
 
     def __init__(self):
-        self.store = collections.defaultdict(list)
+        self.map = collections.defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append([value, timestamp])
+        self.map[key].append([value, timestamp])
 
     def get(self, key: str, timestamp: int) -> str:
-        left = 0
-        right = len(self.store[key])
+        left = 0 
+        right = len(self.map[key])
 
-        while left < right:
+        while left < right: 
             mid = (left+right)//2
-            if self.store[key][mid][1] <= timestamp:
+
+            if self.map[key][mid][1] <= timestamp:
                 left = mid + 1
             else:
                 right = mid
-        return self.store[key][right-1][0] if right !=0 else ""
+        if right != 0:
+            return self.map[key][right-1][0]
+        else:
+            return ""
 
 
 
