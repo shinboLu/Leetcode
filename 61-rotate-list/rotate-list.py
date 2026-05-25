@@ -6,38 +6,23 @@
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head:
-            return 
+            return
         cur = head
-        n = 1
-
+        count = 1
         while cur.next:
-            n+=1
-            cur = cur.next 
+            count +=1
+            cur = cur.next
 
-        cur.next = head 
-        k = n - (k % n) 
+        cur.next = head
+        k = count - (k % count)
 
         while k > 0:
-            cur = cur.next 
-            k -= 1
-
-
-        newHead = cur.next 
-        cur.next = None 
-        return newHead
-
-
-
+            cur = cur.next
+            k-=1
         
+        res = cur.next
+        cur.next = None
 
-                
-        
-        
-
-        
-
-        
-
-        
+        return res
 
         
