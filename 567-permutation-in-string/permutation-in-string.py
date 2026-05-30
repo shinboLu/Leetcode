@@ -1,29 +1,19 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        need = defaultdict(int)
-        window = defaultdict(int)
-        for c in s1:
-            need[c] += 1
-        left = 0 
-        right = 0 
-        valid = 0 
+        target_dict = collections.Counter(s1)
+        visited = collections.Counter(s2[:len(s1)])
+        if target_dict == visited:
+            return True
 
-        while right < len(s2):
-            c = s2[right]
-            right += 1
-            if c in need:
-                window[c] += 1
-                if window[c] == need[c]:
-                    valid += 1
-            while right-left >= len(s1):
-                if valid == len(need):
-                    return True
-                d = s2[left] 
-                left += 1
-                if d in need:
-                    if window[d] == need[d]:
-                        valid -= 1
-                    window[d] -= 1
+        for i in range(len(s1), len(s2)): 
+            visited[s2[i]] += 1
+            visited[s2[i-len(s1)]] -=1
+            if visited[s2[i-len(s1)]] == 0:
+                del visited[i-len(s1)]
+            
+            if visited == target_dict: 
+                return True
+
         return False
-                
+
             
