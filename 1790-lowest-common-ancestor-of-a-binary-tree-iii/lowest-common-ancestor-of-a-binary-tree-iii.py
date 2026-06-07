@@ -14,15 +14,15 @@ class Solution:
         def dfs(node, target):
             if not node:
                 return None
+
             if node in visited:
                 return None
-
             visited.add(node)
-            
+
             if node == target:
                 return node
 
-            left = dfs(node.left, target)
+            left = dfs(node.left, target) 
             right = dfs(node.right, target)
 
             if left or right:
@@ -32,15 +32,8 @@ class Solution:
             if parent:
                 return parent
             return None
-        
-        node = dfs(p, q)
-        if node:
-            return node
-        
-        node = dfs(q, p)
-        if node:
-            return node
-
-            
-            
-        
+        res = dfs(p, q)
+        if res:
+            return res
+        else:
+            return dfs(q, p)
