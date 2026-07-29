@@ -1,34 +1,35 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
+        time = 0 
+        dirs = [[0,1], [1, 0], [-1, 0], [0, -1]] 
         nrow = len(grid)
         ncol = len(grid[0])
+        tot_fresh = 0
         queue = collections.deque()
-        dirs = [[0,1],[1,0], [-1,0], [0,-1]]
-        tot = 0
-        for row in range(nrow):
-            for col in range(ncol):
-                if grid[row][col] == 2:
-                    queue.append([row, col])
-                elif grid[row][col] == 1: 
-                    tot +=1
-        if tot == 0:
+        for r in range(nrow):
+            for c in range(ncol):
+                if grid[r][c] == 1:
+                    tot_fresh +=1
+                if grid[r][c] == 2:
+                    queue.append([r, c])
+        if tot_fresh == 0:
             return 0
-        visited = set()
-        count = 0 
-
+        if not queue and tot_fresh > 0:
+            return -1
+        
         while queue:
-            count+=1
+            
+            cur_rot = 0
             for i in range(len(queue)):
-                cur_x, cur_y = queue.popleft()
-                visited.add((cur_x, cur_y))
-                print(visited)
+                cx, cy = queue.popleft()
                 for dx, dy in dirs:
-                    nx, ny = cur_x + dx, cur_y + dy
-                    if 0<=nx<nrow and 0<=ny<ncol:
-                        if (nx, ny) not in visited and grid[nx][ny] == 1: 
-                            queue.append([nx, ny])
-                            grid[nx][ny] = 2 
-                            tot-=1
+                    nx, ny = dx+cx, dy+cy
+                    if 0<=nx<nrow and 0<=ny<ncol and grid[nx][ny] ==1:
+                        grid[nx][ny]=2
+                        queue.append([nx, ny])
+                        cur_rot +=1
+            if cur_rot > 0:
+                time +=1
+            tot_fresh -= cur_rot 
 
-        return -1 if tot > 0 else count-1
-
+        return time if tot_fresh == 0 else -1
