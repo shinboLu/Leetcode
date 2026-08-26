@@ -1,14 +1,13 @@
 class Solution:
     def frequencySort(self, s: str) -> str:
-        counter = collections.Counter(s) 
+        counter = Counter(s)
 
-        flat_counter = [[val, count] for val, count in counter.items()]
-        flat_counter.sort(key = lambda x: x[1], reverse=True )
-        res = ''
-        for k, v in flat_counter:
-            cur_str = k*v
-            res+=cur_str
+        pairs = sorted(
+            counter.items(),
+            key=lambda pair: pair[1],
+            reverse=True
+        )
 
-        return res
+        return "".join(char * count for char, count in pairs)
         
 
