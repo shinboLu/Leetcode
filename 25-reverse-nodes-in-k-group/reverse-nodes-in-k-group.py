@@ -9,16 +9,13 @@ class Solution:
         group_prev = dummy
 
         while True:
-            # Find the kth node after group_prev.
             kth = self.get_kth(group_prev, k)
 
-            # Fewer than k nodes remain.
             if not kth:
                 break
 
             group_next = kth.next
 
-            # Reverse this group.
             prev = group_next
             curr = group_prev.next
 
@@ -28,7 +25,6 @@ class Solution:
                 prev = curr
                 curr = next_node
 
-            # Reconnect and advance to the tail of this reversed group.
             old_group_head = group_prev.next
             group_prev.next = kth
             group_prev = old_group_head
