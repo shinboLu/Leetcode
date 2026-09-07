@@ -1,15 +1,15 @@
 class Solution:
     def minimumDistance(self, nums: List[int]) -> int:
-        n = len(nums)
-        visited = collections.defaultdict(list)
+        mapping = collections.defaultdict(list)
         res = float('inf')
-        for i in range(n):
-            visited[nums[i]].append(i)
+        for idx, val in enumerate(nums):
+            mapping[val].append(idx)
 
-        for _, values in visited.items():
-            if len(values) >= 3: 
-                for i in range(len(values) - 2):
-                    a, b, c = values[i], values[i+1], values[i+2]
-                    res = min(res, abs(a-b) + abs(b-c) + abs(c-a))
-
-        return res if res != float('inf') else -1
+        for num_val, idices in mapping.items():
+            if len(idices) < 3:
+                continue
+            for i in range(len(idices)-2):
+                p1, p2, p3 = idices[i], idices[i+1], idices[i+2]
+                res = min(res, abs(p1-p2)+abs(p2-p3)+abs(p3-p1))
+        
+        return res if res!= float('inf') else -1
